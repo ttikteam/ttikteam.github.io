@@ -6,64 +6,173 @@
 <title>ttik — 일본에서 살까, 한국이 쌀까</title>
 <style>
 :root {
-  --bg: #FFFFFF; --canvas: #F1F2F4; --text: #111111;
-  --subtle: #525252; --muted: #8E8E93; --border: #EDEDED;
+  --bg: #FFFFFF; --canvas: #F4F5F7; --text: #0E0E10;
+  --subtle: #55565C; --muted: #90919A; --border: #E7E8EC;
+  --ink: #111111; --on-ink: #FFFFFF;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #141416; --canvas: #1C1C1F; --text: #F5F5F5;
-    --subtle: #C4C4C6; --muted: #8E8E93; --border: #2A2A2E;
+    --bg: #0F0F11; --canvas: #17181B; --text: #F4F4F6;
+    --subtle: #B4B5BC; --muted: #7E7F88; --border: #26272C;
+    --ink: #F4F4F6; --on-ink: #0F0F11;
   }
 }
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0; background: var(--bg); color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
   line-height: 1.7; -webkit-font-smoothing: antialiased;
 }
-.wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 96px; }
-.mark { font-size: 30px; font-weight: 700; letter-spacing: -1.2px; margin: 0; }
-.tag { color: var(--subtle); margin: 8px 0 0; }
-h1 { font-size: 26px; letter-spacing: -0.6px; margin: 0 0 4px; }
-h2 { font-size: 17px; margin: 40px 0 8px; }
-h3 { font-size: 15px; margin: 28px 0 6px; }
-p, li { color: var(--subtle); }
-li { margin: 4px 0; }
-hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
 a { color: inherit; }
-.lede { font-size: 17px; color: var(--text); margin: 32px 0 0; }
-.card { background: var(--canvas); border-radius: 14px; padding: 20px 22px; margin: 14px 0; }
-.card h3 { margin: 0 0 4px; color: var(--text); }
-.card p { margin: 0; font-size: 15px; }
-.foot { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 14px; color: var(--muted); }
-.foot a { margin-right: 16px; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+.mark { font-size: 22px; font-weight: 800; letter-spacing: -1px; text-decoration: none; }
+.nav a.small { font-size: 14px; color: var(--muted); text-decoration: none; margin-left: 18px; }
+
+.hero { display: grid; grid-template-columns: 1fr 300px; gap: 56px; align-items: center; padding: 64px 0 88px; }
+.pill { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .2px;
+  color: var(--subtle); background: var(--canvas); border-radius: 999px; padding: 6px 13px; }
+h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 800; margin: 20px 0 0; }
+.hero p { font-size: 17px; color: var(--subtle); margin: 18px 0 0; max-width: 30em; }
+
+.phone { width: 290px; border-radius: 40px; background: var(--canvas); border: 1px solid var(--border);
+  padding: 12px; box-shadow: 0 20px 50px rgba(0,0,0,.10); }
+.screen { background: var(--bg); border-radius: 29px; overflow: hidden; }
+.shot-img { height: 168px; background: var(--bg); display: flex; align-items: center; justify-content: center; }
+.bottle { width: 62px; height: 116px; border-radius: 12px 12px 8px 8px;
+  background: linear-gradient(170deg, #22314F 0%, #22314F 62%, #F0F2F6 62%, #F0F2F6 100%); position: relative; }
+.bottle::after { content: ''; position: absolute; top: 14px; left: 10px; right: 10px; height: 7px;
+  border-radius: 2px; background: rgba(255,255,255,.72); }
+.shot-body { padding: 0 16px 16px; }
+.shot-brand { font-size: 11px; color: var(--muted); }
+.shot-name { font-size: 15px; font-weight: 700; letter-spacing: -.3px; margin-top: 2px; }
+.shot-jp { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.shot-card { background: var(--canvas); border-radius: 13px; padding: 12px 13px; margin-top: 13px; }
+.shot-row { display: flex; justify-content: space-between; align-items: center; }
+.shot-label { font-size: 10px; color: var(--muted); }
+.shot-price { font-size: 22px; font-weight: 800; letter-spacing: -.8px; margin-top: 1px; }
+.shot-krw { font-size: 11px; color: var(--subtle); }
+.shot-cta { margin-top: 12px; background: var(--ink); color: var(--on-ink);
+  border-radius: 999px; text-align: center; font-size: 12px; font-weight: 700; padding: 10px; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.stat { background: var(--bg); padding: 26px 22px; }
+.stat b { display: block; font-size: 30px; font-weight: 800; letter-spacing: -1px; }
+.stat span { font-size: 13px; color: var(--muted); }
+
+.sec { padding: 88px 0 0; }
+.sec h2 { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .4px; margin: 0 0 26px; }
+.feats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.feat { background: var(--canvas); border-radius: 16px; padding: 26px 24px; }
+.feat h3 { font-size: 17px; letter-spacing: -.4px; margin: 0 0 7px; }
+.feat p { font-size: 14px; color: var(--subtle); margin: 0; }
+
+.note { margin-top: 88px; border: 1px solid var(--border); border-radius: 16px; padding: 26px 24px; }
+.note h3 { font-size: 16px; margin: 0 0 6px; }
+.note p { font-size: 14px; color: var(--subtle); margin: 0; }
+
+.foot { margin-top: 96px; padding: 28px 0 64px; border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: center; font-size: 13px; color: var(--muted); }
+.foot a { text-decoration: none; }
+.foot .sp { flex: 1; }
+
+.doc { max-width: 720px; }
+.doc h1 { font-size: 27px; letter-spacing: -.6px; margin: 0 0 4px; }
+.doc h2 { font-size: 17px; color: var(--text); margin: 40px 0 8px; letter-spacing: -.2px; }
+.doc h3 { font-size: 15px; margin: 26px 0 6px; }
+.doc p, .doc li { color: var(--subtle); }
+.doc li { margin: 4px 0; }
+.doc hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
 table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; }
-th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--subtle); }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); color: var(--subtle); }
 th { color: var(--text); font-weight: 600; }
-.back { display: inline-block; margin-bottom: 28px; font-size: 14px; color: var(--muted); text-decoration: none; }
+.back { display: inline-block; margin: 8px 0 26px; font-size: 14px; color: var(--muted); text-decoration: none; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; gap: 44px; padding: 40px 0 64px; }
+  .phone { margin: 0 auto; }
+  h1 { font-size: 34px; letter-spacing: -1.2px; }
+  .stats, .feats { grid-template-columns: 1fr; }
+}
 </style>
 </head>
-<body><div class="wrap"><h1 class="mark">ttik</h1>
-<p class="tag">일본에서 살까, 한국이 쌀까</p>
-
-<p class="lede">일본 매장에서 바코드를 찍으면 그 상품이 어떤 물건인지, 일본에서 얼마인지,
-한국에서는 어떤지 한 화면에서 확인할 수 있는 앱입니다.</p>
-
-<div class="card">
-  <h3>바코드 한 번</h3>
-  <p>포장의 바코드를 찍으면 한국어 상품명과 일본 현지 가격이 바로 나옵니다.</p>
-</div>
-<div class="card">
-  <h3>본품과 리필을 함께</h3>
-  <p>같은 제품의 다른 용량과 리필을 묶어 보여줘서, 매장에서 어느 쪽이 나은지 비교할 수 있습니다.</p>
-</div>
-<div class="card">
-  <h3>같이 담는 장바구니</h3>
-  <p>일행과 장바구니를 공유해 누가 무엇을 담았는지 보고, 면세 기준 금액까지 얼마 남았는지 확인합니다.</p>
+<body><div class="wrap"><div class="nav">
+  <a class="mark" href="./">ttik</a>
+  <div>
+    <a class="small" href="#features">기능</a>
+    <a class="small" href="mailto:tkdgur092@gmail.com">문의</a>
+  </div>
 </div>
 
-<h2>문의</h2>
-<p>서비스에 대한 문의, 제휴 제안, 개인정보 관련 요청은 <a href="mailto:tkdgur092@gmail.com">tkdgur092@gmail.com</a>로 보내주세요.</p>
+<div class="hero">
+  <div>
+    <span class="pill">일본 여행 쇼핑</span>
+    <h1>일본에서 살까,<br>한국이 쌀까</h1>
+    <p>매장에서 바코드를 찍으면 그 상품이 무엇인지, 일본 현지 시세가 얼마인지,
+       한국에서는 어떤지 한 화면에서 확인합니다. 일본어를 몰라도 됩니다.</p>
+  </div>
+
+  <div class="phone" aria-hidden="true">
+    <div class="screen">
+      <div class="shot-img"><div class="bottle"></div></div>
+      <div class="shot-body">
+        <div class="shot-brand">고바야시</div>
+        <div class="shot-name">케시민 침투 화장수</div>
+        <div class="shot-jp">小林製薬 ケシミン 浸透化粧水</div>
+        <div class="shot-card">
+          <div class="shot-row">
+            <div>
+              <div class="shot-label">라쿠텐 최저가</div>
+              <div class="shot-price">¥897</div>
+            </div>
+            <div class="shot-krw">약 8,600원</div>
+          </div>
+        </div>
+        <div class="shot-cta">장바구니에 담기</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>4,553</b><span>등록된 상품</span></div>
+  <div class="stat"><b>101</b><span>브랜드</span></div>
+  <div class="stat"><b>576</b><span>본품·리필 묶음</span></div>
+</div>
+
+<div class="sec" id="features">
+  <h2>기능</h2>
+  <div class="feats">
+    <div class="feat">
+      <h3>바코드 한 번</h3>
+      <p>포장의 바코드를 찍으면 한국어 상품명과 일본 현지 최저가가 바로 나옵니다.
+         찾는 물건이 맞는지 일본어를 읽지 않고 확인할 수 있습니다.</p>
+    </div>
+    <div class="feat">
+      <h3>본품과 리필을 함께</h3>
+      <p>같은 제품의 다른 용량과 리필을 묶어 보여줍니다. 일본어 표기가 제각각이어도
+         같은 물건이면 한자리에 모입니다.</p>
+    </div>
+    <div class="feat">
+      <h3>같이 담는 장바구니</h3>
+      <p>일행과 장바구니를 공유해 누가 무엇을 담았는지 보고, 면세 기준 금액까지
+         얼마나 남았는지 확인합니다.</p>
+    </div>
+    <div class="feat">
+      <h3>한국에서는 어떨까</h3>
+      <p>정식 수입되는 제품인지, 직구로만 구할 수 있는지, 한국에서는 아예 못 사는지
+         알려줍니다. 지금 살지 말지의 기준이 됩니다.</p>
+    </div>
+  </div>
+</div>
+
+<div class="note">
+  <h3>출시 준비 중</h3>
+  <p>App Store 출시를 준비하고 있습니다. 제휴 제안이나 문의는
+     <a href="mailto:tkdgur092@gmail.com">tkdgur092@gmail.com</a>로 보내주세요.</p>
+</div>
 <div class="foot">
   <a href="./">ttik</a><a href="./privacy.html">개인정보 처리방침</a><a href="./terms.html">이용약관</a>
   <p style="margin-top:12px">문의 <a href="mailto:tkdgur092@gmail.com">tkdgur092@gmail.com</a></p>
