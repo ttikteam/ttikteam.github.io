@@ -37,24 +37,27 @@ h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 80
 .hero p { font-size: 17px; color: var(--subtle); margin: 18px 0 0; max-width: 30em; }
 
 .phone { width: 290px; border-radius: 40px; background: var(--canvas); border: 1px solid var(--border);
-  padding: 12px; box-shadow: 0 20px 50px rgba(0,0,0,.10); }
-.screen { background: var(--bg); border-radius: 29px; overflow: hidden; }
-.shot-img { height: 168px; background: var(--bg); display: flex; align-items: center; justify-content: center; }
-.bottle { width: 62px; height: 116px; border-radius: 12px 12px 8px 8px;
-  background: linear-gradient(170deg, #22314F 0%, #22314F 62%, #F0F2F6 62%, #F0F2F6 100%); position: relative; }
-.bottle::after { content: ''; position: absolute; top: 14px; left: 10px; right: 10px; height: 7px;
-  border-radius: 2px; background: rgba(255,255,255,.72); }
-.shot-body { padding: 0 16px 16px; }
-.shot-brand { font-size: 11px; color: var(--muted); }
-.shot-name { font-size: 15px; font-weight: 700; letter-spacing: -.3px; margin-top: 2px; }
-.shot-jp { font-size: 11px; color: var(--muted); margin-top: 3px; }
-.shot-card { background: var(--canvas); border-radius: 13px; padding: 12px 13px; margin-top: 13px; }
-.shot-row { display: flex; justify-content: space-between; align-items: center; }
-.shot-label { font-size: 10px; color: var(--muted); }
-.shot-price { font-size: 22px; font-weight: 800; letter-spacing: -.8px; margin-top: 1px; }
-.shot-krw { font-size: 11px; color: var(--subtle); }
-.shot-cta { margin-top: 12px; background: var(--ink); color: var(--on-ink);
-  border-radius: 999px; text-align: center; font-size: 12px; font-weight: 700; padding: 10px; }
+  padding: 11px; box-shadow: 0 20px 50px rgba(0,0,0,.10); }
+.phone.sm { width: 214px; padding: 8px; border-radius: 30px; }
+.screen { background: var(--bg); border-radius: 30px; overflow: hidden; display: block; }
+.phone.sm .screen { border-radius: 23px; }
+.screen img { display: block; width: 100%; height: auto; }
+
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
+.step .n { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px;
+  border-radius: 999px; background: var(--ink); color: var(--on-ink); font-size: 13px; font-weight: 700; }
+.step h3 { font-size: 17px; letter-spacing: -.4px; margin: 14px 0 6px; }
+.step p { font-size: 14px; color: var(--subtle); margin: 0; }
+
+.shelf { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+.shelf figure { margin: 0; }
+.shelf figcaption { font-size: 13px; color: var(--muted); text-align: center; margin-top: 14px; }
+
+.cats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.cat { background: var(--bg); padding: 22px 18px; }
+.cat b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -.8px; }
+.cat span { font-size: 13px; color: var(--muted); }
 
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border);
   border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
@@ -94,15 +97,18 @@ th { color: var(--text); font-weight: 600; }
   .hero { grid-template-columns: 1fr; gap: 44px; padding: 40px 0 64px; }
   .phone { margin: 0 auto; }
   h1 { font-size: 34px; letter-spacing: -1.2px; }
-  .stats, .feats { grid-template-columns: 1fr; }
+  .stats, .feats, .steps { grid-template-columns: 1fr; }
+  .cats { grid-template-columns: repeat(2, 1fr); }
+  .steps { gap: 32px; }
 }
 </style>
 </head>
 <body><div class="wrap"><div class="nav">
   <a class="mark" href="./">ttik</a>
   <div>
+    <a class="small" href="#how">사용법</a>
     <a class="small" href="#features">기능</a>
-    <a class="small" href="mailto:tkdgur092@gmail.com">문의</a>
+    <a class="small" href="mailto:ttikteam@gmail.com">문의</a>
   </div>
 </div>
 
@@ -114,32 +120,53 @@ th { color: var(--text); font-weight: 600; }
        한국에서는 어떤지 한 화면에서 확인합니다. 일본어를 몰라도 됩니다.</p>
   </div>
 
-  <div class="phone" aria-hidden="true">
-    <div class="screen">
-      <div class="shot-img"><div class="bottle"></div></div>
-      <div class="shot-body">
-        <div class="shot-brand">고바야시</div>
-        <div class="shot-name">케시민 침투 화장수</div>
-        <div class="shot-jp">小林製薬 ケシミン 浸透化粧水</div>
-        <div class="shot-card">
-          <div class="shot-row">
-            <div>
-              <div class="shot-label">라쿠텐 최저가</div>
-              <div class="shot-price">¥897</div>
-            </div>
-            <div class="shot-krw">약 8,600원</div>
-          </div>
-        </div>
-        <div class="shot-cta">장바구니에 담기</div>
-      </div>
-    </div>
+  <div class="phone">
+    <div class="screen"><img src="shots/home.webp" width="540" height="1130"
+      alt="ttik 홈 화면 — 바코드 스캔 배너와 카테고리"></div>
   </div>
 </div>
 
 <div class="stats">
-  <div class="stat"><b>4,553</b><span>등록된 상품</span></div>
-  <div class="stat"><b>101</b><span>브랜드</span></div>
-  <div class="stat"><b>576</b><span>본품·리필 묶음</span></div>
+  <div class="stat"><b>6,353</b><span>등록된 상품</span></div>
+  <div class="stat"><b>162</b><span>브랜드</span></div>
+  <div class="stat"><b>791</b><span>본품·리필 묶음</span></div>
+</div>
+
+<div class="sec" id="how">
+  <h2>이렇게 씁니다</h2>
+  <div class="steps">
+    <div class="step">
+      <span class="n">1</span>
+      <h3>찍는다</h3>
+      <p>돈키호테나 드럭스토어 매대에서 포장의 바코드를 찍습니다.
+         일본어 상품명을 읽거나 옮겨 적을 필요가 없습니다.</p>
+    </div>
+    <div class="step">
+      <span class="n">2</span>
+      <h3>본다</h3>
+      <p>한국어 상품명과 일본 현지 온라인 최저가가 바로 나옵니다.
+         눈앞의 매장 가격이 살 만한 값인지 그 자리에서 판단합니다.</p>
+    </div>
+    <div class="step">
+      <span class="n">3</span>
+      <h3>담는다</h3>
+      <p>살 것들을 장바구니에 모으고 일행과 공유합니다.
+         면세 기준까지 얼마 남았는지도 함께 보입니다.</p>
+    </div>
+  </div>
+
+  <div class="shelf">
+    <figure>
+      <div class="phone sm"><div class="screen"><img src="shots/result.webp" width="540" height="1130"
+        alt="상품 화면 — 한국어 상품명과 일본 현지 최저가"></div></div>
+      <figcaption>찍으면 나오는 화면</figcaption>
+    </figure>
+    <figure>
+      <div class="phone sm"><div class="screen"><img src="shots/category.webp" width="540" height="1130"
+        alt="카테고리 화면 — 대분류와 중분류"></div></div>
+      <figcaption>찍지 않고 둘러볼 때</figcaption>
+    </figure>
+  </div>
 </div>
 
 <div class="sec" id="features">
@@ -168,13 +195,18 @@ th { color: var(--text); font-weight: 600; }
   </div>
 </div>
 
+<div class="sec">
+  <h2>무엇이 들어 있나</h2>
+  <div class="cats"><div class="cat"><b>3,341</b><span>화장품</span></div><div class="cat"><b>1,614</b><span>생활용품</span></div><div class="cat"><b>685</b><span>의약품</span></div><div class="cat"><b>499</b><span>식품</span></div><div class="cat"><b>214</b><span>건강식품</span></div></div>
+</div>
+
 <div class="note">
   <h3>출시 준비 중</h3>
   <p>App Store 출시를 준비하고 있습니다. 제휴 제안이나 문의는
-     <a href="mailto:tkdgur092@gmail.com">tkdgur092@gmail.com</a>로 보내주세요.</p>
+     <a href="mailto:ttikteam@gmail.com">ttikteam@gmail.com</a>로 보내주세요.</p>
 </div>
 <div class="foot">
   <a href="./">ttik</a><a href="./privacy.html">개인정보 처리방침</a><a href="./terms.html">이용약관</a>
-  <p style="margin-top:12px">문의 <a href="mailto:tkdgur092@gmail.com">tkdgur092@gmail.com</a></p>
+  <p style="margin-top:12px">문의 <a href="mailto:ttikteam@gmail.com">ttikteam@gmail.com</a></p>
 </div></div></body>
 </html>
