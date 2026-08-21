@@ -131,6 +131,12 @@ h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 80
 .doc p, .doc li { color: var(--subtle); }
 .doc li { margin: 4px 0; }
 .doc hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
+/* The invite code, on the one page somebody reads it off a screen to type it
+   into a phone. Wide-spaced and large because that is a transcription, and O
+   against 0 at body size is a wrong cart. */
+.doc p.code { font-size: 40px; font-weight: 800; letter-spacing: 8px; color: var(--accent);
+  background: var(--accent-wash); border-radius: 16px; padding: 22px 12px;
+  text-align: center; margin: 24px 0; }
 table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; }
 th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); color: var(--subtle); }
 th { color: var(--text); font-weight: 600; }

@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.ttik.app",
+      "sha256_cert_fingerprints": [
+        "F4:B8:BC:83:6D:63:94:12:B7:43:3E:1C:DA:5B:0E:D4:6B:22:42:F1:7F:2D:1B:10:BE:C5:A6:5A:0C:95:2F:31",
+        "32:10:AC:CD:CA:0B:0F:BB:F0:E0:0A:65:2B:FB:53:01:6B:27:71:C7:37:84:7F:59:4A:8B:53:75:5A:15:46:C1"
+      ]
+    }
+  }
+]
