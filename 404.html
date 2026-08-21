@@ -137,6 +137,9 @@ h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 80
 .doc p.code { font-size: 40px; font-weight: 800; letter-spacing: 8px; color: var(--accent);
   background: var(--accent-wash); border-radius: 16px; padding: 22px 12px;
   text-align: center; margin: 24px 0; }
+.doc a.cta { display: block; text-align: center; text-decoration: none;
+  background: var(--accent); color: #FFFFFF; font-size: 16px; font-weight: 700;
+  border-radius: 999px; padding: 16px 20px; margin: 0 0 8px; }
 table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; }
 th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); color: var(--subtle); }
 th { color: var(--text); font-weight: 600; }
@@ -167,6 +170,7 @@ th { color: var(--text); font-weight: 600; }
   <p>일행이 일본에서 쓸 장바구니에 초대했습니다. ttik을 설치하고
      <b>함께 담기 → 공유 코드가 있다면</b>에 아래 코드를 넣으면 같이 담게 됩니다.</p>
   <p class="code" id="code" hidden></p>
+  <p id="open" hidden><a class="cta" id="openlink" href="#">ttik 앱에서 열기</a></p>
   <p id="nocode">초대 링크가 아니라 이 페이지에 바로 오셨네요. 일행에게 받은 링크를 다시 눌러주세요.</p>
   <p>ttik은 일본 매장에서 바코드를 찍으면 그 상품이 무엇인지, 얼마인지,
      한국에서는 얼마인지 알려주는 앱입니다.</p>
@@ -181,6 +185,18 @@ th { color: var(--text); font-weight: 600; }
     code.textContent = m[1].toUpperCase();
     code.hidden = false;
     document.getElementById('nocode').hidden = true;
+
+    // The button, and why it has to exist at all: KakaoTalk opens links in its
+    // own embedded browser, and iOS refuses to hand a link from an embedded
+    // browser to an app — which is every invite, since invites travel by
+    // KakaoTalk. The custom scheme is not subject to that rule, so the page
+    // that the link did reach offers the jump the link could not make.
+    //
+    // Nothing happens if the app is not installed, which is why the code stays
+    // on screen above it rather than being replaced by this.
+    var open = document.getElementById('open');
+    document.getElementById('openlink').href = 'ttik://join/' + m[1].toUpperCase();
+    open.hidden = false;
   }
 </script>
 <div class="foot">
