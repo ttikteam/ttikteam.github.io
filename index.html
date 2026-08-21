@@ -9,12 +9,19 @@
   --bg: #FFFFFF; --canvas: #F4F5F7; --text: #0E0E10;
   --subtle: #55565C; --muted: #90919A; --border: #E7E8EC;
   --ink: #111111; --on-ink: #FFFFFF;
+  /* colors.accent from the app, which spends it only on links. The page was
+     entirely greyscale and read as a document rather than a product; this is
+     the one colour, and it stays rationed — numbers, the mark, the rule under
+     a claim. A second accent would make it a brochure. */
+  --accent: #0047FF; --accent-wash: #EDF1FF;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0F0F11; --canvas: #17181B; --text: #F4F4F6;
     --subtle: #B4B5BC; --muted: #7E7F88; --border: #26272C;
     --ink: #F4F4F6; --on-ink: #0F0F11;
+    /* #0047FF on near-black is 3.2:1 and vibrates; lifted until it reads. */
+    --accent: #7D9BFF; --accent-wash: #16192A;
   }
 }
 * { box-sizing: border-box; }
@@ -45,7 +52,7 @@ h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 80
 
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
 .step .n { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px;
-  border-radius: 999px; background: var(--ink); color: var(--on-ink); font-size: 13px; font-weight: 700; }
+  border-radius: 999px; background: var(--accent); color: #FFFFFF; font-size: 13px; font-weight: 700; }
 .step h3 { font-size: 17px; letter-spacing: -.4px; margin: 14px 0 6px; }
 .step p { font-size: 14px; color: var(--subtle); margin: 0; }
 
@@ -62,13 +69,49 @@ h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 80
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border);
   border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
 .stat { background: var(--bg); padding: 26px 22px; }
-.stat b { display: block; font-size: 30px; font-weight: 800; letter-spacing: -1px; }
+.stat b { display: block; font-size: 40px; font-weight: 800; letter-spacing: -1.6px; color: var(--accent); }
 .stat span { font-size: 13px; color: var(--muted); }
+
+/* The store badges. Grey and unclickable until there is something to click:
+   a live-looking button that does nothing is worse than an honest "곧". */
+.gets { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+.get { display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 16px; background: var(--canvas); color: var(--muted);
+  font-size: 14px; font-weight: 600; }
+.get svg { width: 17px; height: 17px; fill: currentColor; }
+.soon { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+/* The one place the page raises its voice. Nothing else is set this large,
+   which is what makes it land. */
+.ache { margin-top: 96px; background: var(--accent-wash); border-radius: 24px; padding: 56px 48px; }
+.ache p.big { font-size: 30px; line-height: 1.4; letter-spacing: -1.1px; font-weight: 800;
+  margin: 0; max-width: 17em; }
+.ache p.small { font-size: 16px; color: var(--subtle); margin: 18px 0 0; max-width: 34em; }
+.ache .rule { width: 44px; height: 3px; background: var(--accent); border-radius: 3px; margin-bottom: 26px; }
+
+/* Where the prices come from. A comparison app that will not say is asking to
+   be taken on faith, and this is the first thing a stranger doubts. */
+.srcs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.src { border: 1px solid var(--border); border-radius: 16px; padding: 24px 22px; }
+.src b { display: block; font-size: 15px; letter-spacing: -.3px; margin-bottom: 7px; }
+.src span { font-size: 13px; color: var(--subtle); }
+.src em { display: block; font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .5px;
+  color: var(--accent); margin-bottom: 12px; }
+
+/* Sections arrive rather than being already there. Reduced-motion turns it
+   off entirely — the content is identical either way. */
+.rise { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+.rise.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise { opacity: 1; transform: none; transition: none; }
+}
 
 .sec { padding: 88px 0 0; }
 .sec h2 { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .4px; margin: 0 0 26px; }
 .feats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.feat { background: var(--canvas); border-radius: 16px; padding: 26px 24px; }
+.feat { background: var(--canvas); border-radius: 16px; padding: 26px 24px;
+  border-top: 3px solid var(--accent); }
 .feat h3 { font-size: 17px; letter-spacing: -.4px; margin: 0 0 7px; }
 .feat p { font-size: 14px; color: var(--subtle); margin: 0; }
 
@@ -97,9 +140,12 @@ th { color: var(--text); font-weight: 600; }
   .hero { grid-template-columns: 1fr; gap: 44px; padding: 40px 0 64px; }
   .phone { margin: 0 auto; }
   h1 { font-size: 34px; letter-spacing: -1.2px; }
-  .stats, .feats, .steps { grid-template-columns: 1fr; }
+  .stats, .feats, .steps, .srcs { grid-template-columns: 1fr; }
   .cats { grid-template-columns: repeat(2, 1fr); }
   .steps { gap: 32px; }
+  .ache { padding: 40px 26px; border-radius: 20px; }
+  .ache p.big { font-size: 23px; letter-spacing: -.7px; }
+  .stat b { font-size: 32px; }
 }
 </style>
 </head>
@@ -107,6 +153,7 @@ th { color: var(--text); font-weight: 600; }
   <a class="mark" href="./">ttik</a>
   <div>
     <a class="small" href="#how">쓰는 법</a>
+    <a class="small" href="#where">가격 출처</a>
     <a class="small" href="#features">그 밖에</a>
     <a class="small" href="mailto:ttikteam@gmail.com">문의</a>
   </div>
@@ -120,21 +167,35 @@ th { color: var(--text); font-weight: 600; }
        한국에서는 어떤지 한 화면에서 확인합니다. 일본어를 몰라도 됩니다.</p>
     <p>여행을 준비할 때부터 다녀온 뒤까지 씁니다. 살 것을 미리 담아두고, 매대
        앞에서 확인하고, 돌아와 다시 사고 싶을 때 어디서 살지 찾습니다.</p>
+
+    <div class="gets">
+      <span class="get"><svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.931.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> App Store</span>
+      <span class="get"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M325.3 234.3 104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg> Google Play</span>
+    </div>
+    <p class="soon">두 스토어 모두 출시를 준비하고 있습니다.</p>
   </div>
 
   <div class="phone">
-    <div class="screen"><img src="shots/home.webp" width="540" height="1130"
+    <div class="screen"><img src="shots/home.webp" width="540" height="1103"
       alt="ttik 홈 화면 — 바코드 스캔 배너와 카테고리"></div>
   </div>
 </div>
 
-<div class="stats">
+<div class="stats" data-rise>
   <div class="stat"><b>6,353</b><span>등록된 상품</span></div>
   <div class="stat"><b>162</b><span>브랜드</span></div>
   <div class="stat"><b>791</b><span>본품·리필 묶음</span></div>
 </div>
 
-<div class="sec" id="how">
+<div class="ache" data-rise>
+  <div class="rule"></div>
+  <p class="big">무겁게 들고 왔는데,<br>한국이 더 쌌습니다.</p>
+  <p class="small">캐리어 무게를 재가며 담아 온 것이 집 앞 올리브영에 있을 때가 있습니다.
+     반대로, 여기서는 못 구하는 것을 그냥 두고 온 날도 있고요. 어느 쪽인지는
+     매대 앞에서 이미 알 수 있었던 일입니다.</p>
+</div>
+
+<div class="sec" id="how" data-rise>
   <h2>여행 전 · 여행 중 · 여행 후</h2>
   <div class="steps">
     <div class="step">
@@ -161,19 +222,48 @@ th { color: var(--text); font-weight: 600; }
 
   <div class="shelf">
     <figure>
-      <div class="phone sm"><div class="screen"><img src="shots/result.webp" width="540" height="1130"
+      <div class="phone sm"><div class="screen"><img src="shots/result.webp" width="540" height="1103"
         alt="상품 화면 — 한국어 상품명과 일본 현지 최저가"></div></div>
       <figcaption>찍으면 나오는 화면</figcaption>
     </figure>
     <figure>
-      <div class="phone sm"><div class="screen"><img src="shots/category.webp" width="540" height="1130"
+      <div class="phone sm"><div class="screen"><img src="shots/korea.webp" width="540" height="1103"
+        alt="같은 상품의 한국 가격과 일본 가격을 나란히 비교한 화면"></div></div>
+      <figcaption>한국 가격까지</figcaption>
+    </figure>
+    <figure>
+      <div class="phone sm"><div class="screen"><img src="shots/category.webp" width="540" height="1103"
         alt="카테고리 화면 — 대분류와 중분류"></div></div>
       <figcaption>찍지 않고 둘러볼 때</figcaption>
     </figure>
   </div>
 </div>
 
-<div class="sec" id="features">
+<div class="sec" id="where" data-rise>
+  <h2>가격은 어디서 오나</h2>
+  <div class="srcs">
+    <div class="src">
+      <em>매대 가격</em>
+      <b>다녀온 사람들이 적습니다</b>
+      <span>돈키호테와 드럭스토어의 실제 매대 가격은 이용자 제보로 쌓입니다.
+        같은 상품에 값이 엇갈리면 최근 것과 다수를 따릅니다.</span>
+    </div>
+    <div class="src">
+      <em>일본 온라인</em>
+      <b>라쿠텐 실시간 최저가</b>
+      <span>라쿠텐 공식 API로 그때그때 받아옵니다. 매대에서 본 값이 비싼 편인지
+        아닌지를 이걸로 가늠합니다.</span>
+    </div>
+    <div class="src">
+      <em>한국 가격</em>
+      <b>정식 수입과 직구를 구분해서</b>
+      <span>한국에서도 파는 제품인지, 정식 수입품인지 직구로만 오는 것인지를
+        나눠서 보여줍니다. 배송 기간과 통관이 달라지기 때문입니다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="features" data-rise>
   <h2>그 밖에</h2>
   <div class="feats">
     <div class="feat">
@@ -189,12 +279,12 @@ th { color: var(--text); font-weight: 600; }
   </div>
 </div>
 
-<div class="sec">
+<div class="sec" data-rise>
   <h2>무엇이 들어 있나</h2>
-  <div class="cats"><div class="cat"><b>3,341</b><span>화장품</span></div><div class="cat"><b>1,614</b><span>생활용품</span></div><div class="cat"><b>685</b><span>의약품</span></div><div class="cat"><b>499</b><span>식품</span></div><div class="cat"><b>214</b><span>건강식품</span></div></div>
+  <div class="cats"><div class="cat"><b>3,341</b><span>뷰티</span></div><div class="cat"><b>1,614</b><span>생활용품</span></div><div class="cat"><b>685</b><span>의약품</span></div><div class="cat"><b>499</b><span>식품</span></div><div class="cat"><b>214</b><span>건강식품</span></div></div>
 </div>
 
-<div class="note">
+<div class="note" data-rise>
   <h3>출시 준비 중</h3>
   <p>App Store 출시를 준비하고 있습니다. 제휴 제안이나 문의는
      <a href="mailto:ttikteam@gmail.com">ttikteam@gmail.com</a>로 보내주세요.</p>
@@ -202,5 +292,24 @@ th { color: var(--text); font-weight: 600; }
 <div class="foot">
   <a href="./">ttik</a><a href="./privacy.html">개인정보 처리방침</a><a href="./terms.html">이용약관</a>
   <p style="margin-top:12px">문의 <a href="mailto:ttikteam@gmail.com">ttikteam@gmail.com</a></p>
-</div></div></body>
+</div></div>
+<script>
+document.querySelectorAll('[data-rise]').forEach(function (el) { el.classList.add('rise'); });
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+  });
+}, { rootMargin: '0px 0px -12% 0px' });
+document.querySelectorAll('.rise').forEach(function (el) { io.observe(el); });
+// Nothing about an entrance is worth a blank page. If the observer has not run
+// by now — a hidden tab that never paints, an engine that throttles it, a bug
+// of mine — everything simply appears. The animation is the enhancement; the
+// words are the page.
+setTimeout(function () {
+  document.querySelectorAll('.rise').forEach(function (el) { el.classList.add('in'); });
+}, 2500);
+</script>
+</body>
 </html>

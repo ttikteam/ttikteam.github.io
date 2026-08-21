@@ -9,12 +9,19 @@
   --bg: #FFFFFF; --canvas: #F4F5F7; --text: #0E0E10;
   --subtle: #55565C; --muted: #90919A; --border: #E7E8EC;
   --ink: #111111; --on-ink: #FFFFFF;
+  /* colors.accent from the app, which spends it only on links. The page was
+     entirely greyscale and read as a document rather than a product; this is
+     the one colour, and it stays rationed — numbers, the mark, the rule under
+     a claim. A second accent would make it a brochure. */
+  --accent: #0047FF; --accent-wash: #EDF1FF;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0F0F11; --canvas: #17181B; --text: #F4F4F6;
     --subtle: #B4B5BC; --muted: #7E7F88; --border: #26272C;
     --ink: #F4F4F6; --on-ink: #0F0F11;
+    /* #0047FF on near-black is 3.2:1 and vibrates; lifted until it reads. */
+    --accent: #7D9BFF; --accent-wash: #16192A;
   }
 }
 * { box-sizing: border-box; }
@@ -45,7 +52,7 @@ h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 80
 
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
 .step .n { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px;
-  border-radius: 999px; background: var(--ink); color: var(--on-ink); font-size: 13px; font-weight: 700; }
+  border-radius: 999px; background: var(--accent); color: #FFFFFF; font-size: 13px; font-weight: 700; }
 .step h3 { font-size: 17px; letter-spacing: -.4px; margin: 14px 0 6px; }
 .step p { font-size: 14px; color: var(--subtle); margin: 0; }
 
@@ -62,13 +69,49 @@ h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 80
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border);
   border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
 .stat { background: var(--bg); padding: 26px 22px; }
-.stat b { display: block; font-size: 30px; font-weight: 800; letter-spacing: -1px; }
+.stat b { display: block; font-size: 40px; font-weight: 800; letter-spacing: -1.6px; color: var(--accent); }
 .stat span { font-size: 13px; color: var(--muted); }
+
+/* The store badges. Grey and unclickable until there is something to click:
+   a live-looking button that does nothing is worse than an honest "곧". */
+.gets { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+.get { display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 16px; background: var(--canvas); color: var(--muted);
+  font-size: 14px; font-weight: 600; }
+.get svg { width: 17px; height: 17px; fill: currentColor; }
+.soon { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+/* The one place the page raises its voice. Nothing else is set this large,
+   which is what makes it land. */
+.ache { margin-top: 96px; background: var(--accent-wash); border-radius: 24px; padding: 56px 48px; }
+.ache p.big { font-size: 30px; line-height: 1.4; letter-spacing: -1.1px; font-weight: 800;
+  margin: 0; max-width: 17em; }
+.ache p.small { font-size: 16px; color: var(--subtle); margin: 18px 0 0; max-width: 34em; }
+.ache .rule { width: 44px; height: 3px; background: var(--accent); border-radius: 3px; margin-bottom: 26px; }
+
+/* Where the prices come from. A comparison app that will not say is asking to
+   be taken on faith, and this is the first thing a stranger doubts. */
+.srcs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.src { border: 1px solid var(--border); border-radius: 16px; padding: 24px 22px; }
+.src b { display: block; font-size: 15px; letter-spacing: -.3px; margin-bottom: 7px; }
+.src span { font-size: 13px; color: var(--subtle); }
+.src em { display: block; font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .5px;
+  color: var(--accent); margin-bottom: 12px; }
+
+/* Sections arrive rather than being already there. Reduced-motion turns it
+   off entirely — the content is identical either way. */
+.rise { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+.rise.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise { opacity: 1; transform: none; transition: none; }
+}
 
 .sec { padding: 88px 0 0; }
 .sec h2 { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .4px; margin: 0 0 26px; }
 .feats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.feat { background: var(--canvas); border-radius: 16px; padding: 26px 24px; }
+.feat { background: var(--canvas); border-radius: 16px; padding: 26px 24px;
+  border-top: 3px solid var(--accent); }
 .feat h3 { font-size: 17px; letter-spacing: -.4px; margin: 0 0 7px; }
 .feat p { font-size: 14px; color: var(--subtle); margin: 0; }
 
@@ -97,9 +140,12 @@ th { color: var(--text); font-weight: 600; }
   .hero { grid-template-columns: 1fr; gap: 44px; padding: 40px 0 64px; }
   .phone { margin: 0 auto; }
   h1 { font-size: 34px; letter-spacing: -1.2px; }
-  .stats, .feats, .steps { grid-template-columns: 1fr; }
+  .stats, .feats, .steps, .srcs { grid-template-columns: 1fr; }
   .cats { grid-template-columns: repeat(2, 1fr); }
   .steps { gap: 32px; }
+  .ache { padding: 40px 26px; border-radius: 20px; }
+  .ache p.big { font-size: 23px; letter-spacing: -.7px; }
+  .stat b { font-size: 32px; }
 }
 </style>
 </head>
@@ -278,5 +324,24 @@ th { color: var(--text); font-weight: 600; }
 <p>문의: ttikteam@gmail.com</p></div><div class="foot">
   <a href="./">ttik</a><a href="./privacy.html">개인정보 처리방침</a><a href="./terms.html">이용약관</a>
   <p style="margin-top:12px">문의 <a href="mailto:ttikteam@gmail.com">ttikteam@gmail.com</a></p>
-</div></div></body>
+</div></div>
+<script>
+document.querySelectorAll('[data-rise]').forEach(function (el) { el.classList.add('rise'); });
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+  });
+}, { rootMargin: '0px 0px -12% 0px' });
+document.querySelectorAll('.rise').forEach(function (el) { io.observe(el); });
+// Nothing about an entrance is worth a blank page. If the observer has not run
+// by now — a hidden tab that never paints, an engine that throttles it, a bug
+// of mine — everything simply appears. The animation is the enhancement; the
+// words are the page.
+setTimeout(function () {
+  document.querySelectorAll('.rise').forEach(function (el) { el.classList.add('in'); });
+}, 2500);
+</script>
+</body>
 </html>
