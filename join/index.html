@@ -181,7 +181,7 @@ th { color: var(--text); font-weight: 600; }
      <b>함께 담기 → 공유 코드가 있다면</b>에 아래 코드를 넣으면 같이 담게 됩니다.</p>
   <p class="code" id="code" hidden></p>
   <p id="open" hidden><a class="cta" id="openlink" href="#">ttik 앱에서 열기</a></p>
-  <p id="hint" hidden>앱이 없으면 스토어로 안내해드려요.</p>
+  <p id="hint" hidden>앱이 열리지 않으면 눌러주세요. 앱이 없으면 스토어로 안내해드려요.</p>
   <p id="nocode">초대 링크가 아니라 이 페이지에 바로 오셨네요. 일행에게 받은 링크를 다시 눌러주세요.</p>
   <p>ttik은 일본 매장에서 바코드를 찍으면 그 상품이 무엇인지, 얼마인지,
      한국에서는 얼마인지 알려주는 앱입니다.</p>
@@ -217,20 +217,43 @@ th { color: var(--text); font-weight: 600; }
     document.getElementById('open').hidden = false;
     document.getElementById('hint').hidden = false;
 
-    // Try the app, and send anyone who does not have it to the store.
+    var code = m[1].toUpperCase();
+    var store = /android/i.test(navigator.userAgent) ? STORE_ANDROID : STORE_IOS;
+
+    // Open the app, and send anyone who has not got it to the store.
     //
     // Nothing can ask a phone whether an app is installed, so this asks the
     // only question a browser can answer: are we still here? An app that
     // opened has pushed this page into the background, and visibilityState
-    // says so. Still visible a moment later means nothing caught the scheme.
-    document.getElementById('openlink').addEventListener('click', function (e) {
-      e.preventDefault();
-      var store = /android/i.test(navigator.userAgent) ? STORE_ANDROID : STORE_IOS;
-      window.location.href = 'ttik://join?code=' + m[1].toUpperCase();
+    // says so. Still visible two seconds later means nothing caught the
+    // scheme, and that is somebody who needs the store.
+    //
+    // Two seconds rather than one: a cold app launch is slower than a warm
+    // one, and getting this wrong sends somebody who does have the app to a
+    // shop page for it.
+    function go() {
+      window.location.href = 'ttik://join?code=' + code;
       if (!store) return;
       setTimeout(function () {
         if (document.visibilityState === 'visible') window.location.href = store;
-      }, 1500);
+      }, 2000);
+    }
+
+    // Straight away, without waiting to be asked. The link was already a
+    // decision — it was tapped in a chat — and a second tap on a page nobody
+    // meant to visit is a step that only exists because iOS will not hand a
+    // link from a chat app's browser to an app.
+    //
+    // Once per visit: coming back with the back button should not fire it
+    // again, and neither should the browser restoring this page later.
+    if (!sessionStorage.getItem('ttik.tried')) {
+      sessionStorage.setItem('ttik.tried', code);
+      go();
+    }
+
+    document.getElementById('openlink').addEventListener('click', function (e) {
+      e.preventDefault();
+      go();
     });
   }
 </script>
