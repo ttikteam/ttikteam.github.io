@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ttik — 일본 가격과 한국 가격을 한눈에</title>
+<meta name="description" content="일본 매장에서 본 이 상품, 한국에서는 얼마일까요? ttik에서 비교해보세요.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ttik">
+<meta property="og:title" content="ttik — 일본 가격과 한국 가격을 한눈에">
+<meta property="og:description" content="일본 매장에서 본 이 상품, 한국에서는 얼마일까요? ttik에서 비교해보세요.">
+<meta property="og:image" content="https://ttik.co.kr/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root {
+  --bg: #FFFFFF; --canvas: #F4F5F7; --text: #0E0E10;
+  --subtle: #55565C; --muted: #90919A; --border: #E7E8EC;
+  --ink: #111111; --on-ink: #FFFFFF;
+  /* colors.accent from the app, which spends it only on links. The page was
+     entirely greyscale and read as a document rather than a product; this is
+     the one colour, and it stays rationed — numbers, the mark, the rule under
+     a claim. A second accent would make it a brochure. */
+  --accent: #0047FF; --accent-wash: #EDF1FF;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0F0F11; --canvas: #17181B; --text: #F4F4F6;
+    --subtle: #B4B5BC; --muted: #7E7F88; --border: #26272C;
+    --ink: #F4F4F6; --on-ink: #0F0F11;
+    /* #0047FF on near-black is 3.2:1 and vibrates; lifted until it reads. */
+    --accent: #7D9BFF; --accent-wash: #16192A;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  line-height: 1.7; -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+.mark { font-size: 22px; font-weight: 800; letter-spacing: -1px; text-decoration: none; }
+.nav a.small { font-size: 14px; color: var(--muted); text-decoration: none; margin-left: 18px; }
+
+.hero { display: grid; grid-template-columns: 1fr 300px; gap: 56px; align-items: center; padding: 64px 0 88px; }
+.pill { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .2px;
+  color: var(--subtle); background: var(--canvas); border-radius: 999px; padding: 6px 13px; }
+h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 800; margin: 20px 0 0; }
+.hero p { font-size: 17px; color: var(--subtle); margin: 18px 0 0; max-width: 30em; }
+
+.phone { width: 290px; border-radius: 40px; background: var(--canvas); border: 1px solid var(--border);
+  padding: 11px; box-shadow: 0 20px 50px rgba(0,0,0,.10); }
+.phone.sm { width: 214px; padding: 8px; border-radius: 30px; }
+.screen { background: var(--bg); border-radius: 30px; overflow: hidden; display: block; }
+.phone.sm .screen { border-radius: 23px; }
+.screen img { display: block; width: 100%; height: auto; }
+
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
+.step .n { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px;
+  border-radius: 999px; background: var(--accent); color: #FFFFFF; font-size: 13px; font-weight: 700; }
+.step h3 { font-size: 17px; letter-spacing: -.4px; margin: 14px 0 6px; }
+.step p { font-size: 14px; color: var(--subtle); margin: 0; }
+
+.shelf { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+.shelf figure { margin: 0; }
+.shelf figcaption { font-size: 13px; color: var(--muted); text-align: center; margin-top: 14px; }
+
+.cats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.cat { background: var(--bg); padding: 22px 18px; }
+.cat b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -.8px; }
+.cat span { font-size: 13px; color: var(--muted); }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.stat { background: var(--bg); padding: 26px 22px; }
+.stat b { display: block; font-size: 40px; font-weight: 800; letter-spacing: -1.6px; color: var(--accent); }
+.stat span { font-size: 13px; color: var(--muted); }
+
+/* The store badges. Grey and unclickable until there is something to click:
+   a live-looking button that does nothing is worse than an honest "곧". */
+.gets { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+.get { display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 16px; background: var(--canvas); color: var(--muted);
+  font-size: 14px; font-weight: 600; }
+.get svg { width: 17px; height: 17px; fill: currentColor; }
+.soon { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+/* The one place the page raises its voice. Nothing else is set this large,
+   which is what makes it land. */
+.ache { margin-top: 96px; background: var(--accent-wash); border-radius: 24px; padding: 56px 48px; }
+.ache p.big { font-size: 30px; line-height: 1.4; letter-spacing: -1.1px; font-weight: 800;
+  margin: 0; max-width: 17em; }
+.ache p.small { font-size: 16px; color: var(--subtle); margin: 18px 0 0; max-width: 34em; }
+.ache .rule { width: 44px; height: 3px; background: var(--accent); border-radius: 3px; margin-bottom: 26px; }
+
+/* Where the prices come from. A comparison app that will not say is asking to
+   be taken on faith, and this is the first thing a stranger doubts. */
+.srcs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.src { border: 1px solid var(--border); border-radius: 16px; padding: 24px 22px; }
+.src b { display: block; font-size: 15px; letter-spacing: -.3px; margin-bottom: 7px; }
+.src span { font-size: 13px; color: var(--subtle); }
+.src em { display: block; font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .5px;
+  color: var(--accent); margin-bottom: 12px; }
+
+/* Sections arrive rather than being already there. Reduced-motion turns it
+   off entirely — the content is identical either way. */
+.rise { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+.rise.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise { opacity: 1; transform: none; transition: none; }
+}
+
+.sec { padding: 88px 0 0; }
+.sec h2 { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .4px; margin: 0 0 26px; }
+.feats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.feat { background: var(--canvas); border-radius: 16px; padding: 26px 24px;
+  border-top: 3px solid var(--accent); }
+.feat h3 { font-size: 17px; letter-spacing: -.4px; margin: 0 0 7px; }
+.feat p { font-size: 14px; color: var(--subtle); margin: 0; }
+
+.note { margin-top: 88px; border: 1px solid var(--border); border-radius: 16px; padding: 26px 24px; }
+.note h3 { font-size: 16px; margin: 0 0 6px; }
+.note p { font-size: 14px; color: var(--subtle); margin: 0; }
+
+.foot { margin-top: 96px; padding: 28px 0 64px; border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: center; font-size: 13px; color: var(--muted); }
+.foot a { text-decoration: none; }
+.foot .sp { flex: 1; }
+
+.doc { max-width: 720px; }
+.doc h1 { font-size: 27px; letter-spacing: -.6px; margin: 0 0 4px; }
+.doc h2 { font-size: 17px; color: var(--text); margin: 40px 0 8px; letter-spacing: -.2px; }
+.doc h3 { font-size: 15px; margin: 26px 0 6px; }
+.doc p, .doc li { color: var(--subtle); }
+.doc li { margin: 4px 0; }
+.doc hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
+/* The invite code, on the one page somebody reads it off a screen to type it
+   into a phone. Wide-spaced and large because that is a transcription, and O
+   against 0 at body size is a wrong cart. */
+.doc p.code { font-size: 40px; font-weight: 800; letter-spacing: 8px; color: var(--accent);
+  background: var(--accent-wash); border-radius: 16px; padding: 22px 12px;
+  text-align: center; margin: 24px 0; }
+.doc #hint { text-align: center; font-size: 13px; color: var(--subtle); margin: 0 0 8px; }
+.doc a.cta { display: block; text-align: center; text-decoration: none;
+  background: var(--accent); color: #FFFFFF; font-size: 16px; font-weight: 700;
+  border-radius: 999px; padding: 16px 20px; margin: 0 0 8px; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); color: var(--subtle); }
+th { color: var(--text); font-weight: 600; }
+.back { display: inline-block; margin: 8px 0 26px; font-size: 14px; color: var(--muted); text-decoration: none; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; gap: 44px; padding: 40px 0 64px; }
+  .phone { margin: 0 auto; }
+  h1 { font-size: 34px; letter-spacing: -1.2px; }
+  .stats, .feats, .steps, .srcs { grid-template-columns: 1fr; }
+  .cats { grid-template-columns: repeat(2, 1fr); }
+  .steps { gap: 32px; }
+  .ache { padding: 40px 26px; border-radius: 20px; }
+  .ache p.big { font-size: 23px; letter-spacing: -.7px; }
+  .stat b { font-size: 32px; }
+}
+</style>
+</head>
+<body><div class="wrap"><div class="nav">
+  <a class="mark" href="./">ttik</a>
+  <div>
+    <a class="small" href="#features">기능</a>
+    <a class="small" href="mailto:ttikteam@gmail.com">문의</a>
+  </div>
+</div>
+<div class="doc" id="product">
+  <p id="loading">상품을 불러오는 중…</p>
+  <div id="card" hidden>
+    <img id="img" alt="" hidden>
+    <p class="brand" id="brand"></p>
+    <h1 id="name"></h1>
+    <p class="prices">
+      <span id="jp"></span>
+      <span id="kr"></span>
+    </p>
+    <p><a class="cta" id="openlink" href="#">ttik 앱에서 보기</a></p>
+    <p id="hint">앱이 열리지 않으면 눌러주세요. 앱이 없으면 스토어로 안내해드려요.</p>
+  </div>
+  <p id="missing" hidden>이 상품은 아직 ttik에 없어요. 앱에서 바코드를 찍으면 등록을 요청할 수 있어요.</p>
+  <p id="nojan" hidden>공유 링크가 아니라 이 페이지에 바로 오셨네요.</p>
+  <p>ttik은 일본 매장에서 바코드를 찍으면 그 상품이 무엇인지, 얼마인지,
+     한국에서는 얼마인지 알려주는 앱입니다.</p>
+  <p><a class="back" href="../">← ttik 소개 보기</a></p>
+</div>
+<style>
+  #product img { width: 160px; height: 160px; object-fit: contain; border-radius: 16px; background: #f1f2f4; display: block; margin: 0 0 16px; }
+  #product .brand { color: #8e8e93; margin: 0 0 4px; font-size: 14px; }
+  #product h1 { margin: 0 0 12px; font-size: 22px; line-height: 1.35; }
+  #product .prices { display: flex; gap: 16px; margin: 0 0 20px; font-size: 15px; }
+  #product .prices span:empty { display: none; }
+</style>
+<script>
+  var STORE_IOS = 'https://apps.apple.com/kr/app/id6799801905';
+  var STORE_ANDROID = 'https://play.google.com/store/apps/details?id=com.ttik.app';
+  var SUPABASE = 'https://xlggykowyigtoybnzasd.supabase.co';
+  var KEY = 'sb_publishable_Fa8lkrfIIpt8cdWtr6R6tw_QJ1KSira';
+
+  var q = new URLSearchParams(location.search).get('jan');
+  var m = q ? [null, q] : location.pathname.match(/\/p\/(\d{8,14})/);
+  var jan = m && m[1];
+  var $ = function (id) { return document.getElementById(id); };
+
+  if (!jan) {
+    $('loading').hidden = true; $('nojan').hidden = false;
+  } else {
+    var store = /android/i.test(navigator.userAgent) ? STORE_ANDROID : STORE_IOS;
+    // 앱을 열고, 없으면 스토어로. join 페이지와 같은 방식 — 앱이 열렸으면 이
+    // 페이지가 뒤로 밀려 visibilityState 가 말해 줍니다.
+    function go() {
+      window.location.href = 'ttik://p?barcode=' + jan;
+      setTimeout(function () {
+        if (document.visibilityState === 'visible') window.location.href = store;
+      }, 2000);
+    }
+    $('openlink').addEventListener('click', function (e) { e.preventDefault(); go(); });
+
+    fetch(SUPABASE + '/rest/v1/japan_products?select=kr_search_keyword,brand_kr,image_url,list_price_yen,kr_price_krw&hidden=eq.false&jan_code=eq.' + jan,
+      { headers: { apikey: KEY, Authorization: 'Bearer ' + KEY } })
+      .then(function (r) { return r.json(); })
+      .then(function (rows) {
+        $('loading').hidden = true;
+        var p = rows && rows[0];
+        if (!p) { $('missing').hidden = false; return; }
+        if (p.image_url) { $('img').src = p.image_url; $('img').hidden = false; }
+        $('brand').textContent = p.brand_kr || '';
+        $('name').textContent = p.kr_search_keyword || jan;
+        document.title = (p.kr_search_keyword || 'ttik') + ' — ttik';
+        if (p.list_price_yen) $('jp').textContent = '일본 정가 ¥' + p.list_price_yen.toLocaleString();
+        if (p.kr_price_krw) $('kr').textContent = '한국 ' + p.kr_price_krw.toLocaleString() + '원';
+        $('card').hidden = false;
+      })
+      .catch(function () { $('loading').hidden = true; $('missing').hidden = false; });
+  }
+</script>
+<div class="foot">
+  <a href="./">ttik</a><a href="./privacy.html">개인정보 처리방침</a><a href="./terms.html">이용약관</a><a href="./delete-account.html">계정 삭제</a>
+  <p style="margin-top:12px">문의 <a href="mailto:ttikteam@gmail.com">ttikteam@gmail.com</a></p>
+</div></div>
+<script>
+document.querySelectorAll('[data-rise]').forEach(function (el) { el.classList.add('rise'); });
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+  });
+}, { rootMargin: '0px 0px -12% 0px' });
+document.querySelectorAll('.rise').forEach(function (el) { io.observe(el); });
+// Nothing about an entrance is worth a blank page. If the observer has not run
+// by now — a hidden tab that never paints, an engine that throttles it, a bug
+// of mine — everything simply appears. The animation is the enhancement; the
+// words are the page.
+setTimeout(function () {
+  document.querySelectorAll('.rise').forEach(function (el) { el.classList.add('in'); });
+}, 2500);
+</script>
+</body>
+</html>
