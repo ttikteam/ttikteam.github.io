@@ -207,9 +207,12 @@ th { color: var(--text); font-weight: 600; }
   var SUPABASE = 'https://xlggykowyigtoybnzasd.supabase.co';
   var KEY = 'sb_publishable_Fa8lkrfIIpt8cdWtr6R6tw_QJ1KSira';
 
+  // 숫자만. 이 값이 그대로 Supabase 주소에 붙으므로, 검증이 없으면
+  // ?jan=123%26select%3D* 같은 것이 쿼리를 바꿉니다. 그 표는 전부 공개라
+  // 새어 나갈 것은 없지만, 주소에 붙는 값은 모양을 정해 두는 것이 맞습니다.
   var q = new URLSearchParams(location.search).get('jan');
   var m = q ? [null, q] : location.pathname.match(/\/p\/(\d{8,14})/);
-  var jan = m && m[1];
+  var jan = m && /^\d{8,14}$/.test(m[1]) ? m[1] : null;
   var $ = function (id) { return document.getElementById(id); };
 
   if (!jan) {
