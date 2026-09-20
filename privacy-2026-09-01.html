@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ttik 개인정보 처리방침</title>
+<meta name="description" content="ttik — 일본 매장에서 바코드를 찍으면 한국 가격까지 알려주는 앱">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ttik">
+<meta property="og:title" content="ttik 개인정보 처리방침">
+<meta property="og:description" content="ttik — 일본 매장에서 바코드를 찍으면 한국 가격까지 알려주는 앱">
+<meta property="og:image" content="https://ttik.co.kr/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root {
+  --bg: #FFFFFF; --canvas: #F4F5F7; --text: #0E0E10;
+  --subtle: #55565C; --muted: #90919A; --border: #E7E8EC;
+  --ink: #111111; --on-ink: #FFFFFF;
+  /* colors.accent from the app, which spends it only on links. The page was
+     entirely greyscale and read as a document rather than a product; this is
+     the one colour, and it stays rationed — numbers, the mark, the rule under
+     a claim. A second accent would make it a brochure. */
+  --accent: #0047FF; --accent-wash: #EDF1FF;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0F0F11; --canvas: #17181B; --text: #F4F4F6;
+    --subtle: #B4B5BC; --muted: #7E7F88; --border: #26272C;
+    --ink: #F4F4F6; --on-ink: #0F0F11;
+    /* #0047FF on near-black is 3.2:1 and vibrates; lifted until it reads. */
+    --accent: #7D9BFF; --accent-wash: #16192A;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  line-height: 1.7; -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+.mark { font-size: 22px; font-weight: 800; letter-spacing: -1px; text-decoration: none; }
+.nav a.small { font-size: 14px; color: var(--muted); text-decoration: none; margin-left: 18px; }
+
+.hero { display: grid; grid-template-columns: 1fr 300px; gap: 56px; align-items: center; padding: 64px 0 88px; }
+.pill { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .2px;
+  color: var(--subtle); background: var(--canvas); border-radius: 999px; padding: 6px 13px; }
+h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 800; margin: 20px 0 0; }
+.hero p { font-size: 17px; color: var(--subtle); margin: 18px 0 0; max-width: 30em; }
+
+.phone { width: 290px; border-radius: 40px; background: var(--canvas); border: 1px solid var(--border);
+  padding: 11px; box-shadow: 0 20px 50px rgba(0,0,0,.10); }
+.phone.sm { width: 214px; padding: 8px; border-radius: 30px; }
+.screen { background: var(--bg); border-radius: 30px; overflow: hidden; display: block; }
+.phone.sm .screen { border-radius: 23px; }
+.screen img { display: block; width: 100%; height: auto; }
+
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
+.step .n { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px;
+  border-radius: 999px; background: var(--accent); color: #FFFFFF; font-size: 13px; font-weight: 700; }
+.step h3 { font-size: 17px; letter-spacing: -.4px; margin: 14px 0 6px; }
+.step p { font-size: 14px; color: var(--subtle); margin: 0; }
+
+.shelf { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+.shelf figure { margin: 0; }
+.shelf figcaption { font-size: 13px; color: var(--muted); text-align: center; margin-top: 14px; }
+
+.cats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.cat { background: var(--bg); padding: 22px 18px; }
+.cat b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -.8px; }
+.cat span { font-size: 13px; color: var(--muted); }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.stat { background: var(--bg); padding: 26px 22px; }
+.stat b { display: block; font-size: 40px; font-weight: 800; letter-spacing: -1.6px; color: var(--accent); }
+.stat span { font-size: 13px; color: var(--muted); }
+
+/* The store badges. Grey and unclickable until there is something to click:
+   a live-looking button that does nothing is worse than an honest "곧". */
+.gets { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+.get { display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 16px; background: var(--canvas); color: var(--muted);
+  font-size: 14px; font-weight: 600; }
+.get svg { width: 17px; height: 17px; fill: currentColor; }
+.soon { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+/* The one place the page raises its voice. Nothing else is set this large,
+   which is what makes it land. */
+.ache { margin-top: 96px; background: var(--accent-wash); border-radius: 24px; padding: 56px 48px; }
+.ache p.big { font-size: 30px; line-height: 1.4; letter-spacing: -1.1px; font-weight: 800;
+  margin: 0; max-width: 17em; }
+.ache p.small { font-size: 16px; color: var(--subtle); margin: 18px 0 0; max-width: 34em; }
+.ache .rule { width: 44px; height: 3px; background: var(--accent); border-radius: 3px; margin-bottom: 26px; }
+
+/* Where the prices come from. A comparison app that will not say is asking to
+   be taken on faith, and this is the first thing a stranger doubts. */
+.srcs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.src { border: 1px solid var(--border); border-radius: 16px; padding: 24px 22px; }
+.src b { display: block; font-size: 15px; letter-spacing: -.3px; margin-bottom: 7px; }
+.src span { font-size: 13px; color: var(--subtle); }
+.src em { display: block; font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .5px;
+  color: var(--accent); margin-bottom: 12px; }
+
+/* Sections arrive rather than being already there. Reduced-motion turns it
+   off entirely — the content is identical either way. */
+.rise { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+.rise.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise { opacity: 1; transform: none; transition: none; }
+}
+
+.sec { padding: 88px 0 0; }
+.sec h2 { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .4px; margin: 0 0 26px; }
+.feats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.feat { background: var(--canvas); border-radius: 16px; padding: 26px 24px;
+  border-top: 3px solid var(--accent); }
+.feat h3 { font-size: 17px; letter-spacing: -.4px; margin: 0 0 7px; }
+.feat p { font-size: 14px; color: var(--subtle); margin: 0; }
+
+.note { margin-top: 88px; border: 1px solid var(--border); border-radius: 16px; padding: 26px 24px; }
+.note h3 { font-size: 16px; margin: 0 0 6px; }
+.note p { font-size: 14px; color: var(--subtle); margin: 0; }
+
+.foot { margin-top: 96px; padding: 28px 0 64px; border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: center; font-size: 13px; color: var(--muted); }
+.foot a { text-decoration: none; }
+.foot .sp { flex: 1; }
+
+.doc { max-width: 720px; }
+.doc h1 { font-size: 27px; letter-spacing: -.6px; margin: 0 0 4px; }
+.doc h2 { font-size: 17px; color: var(--text); margin: 40px 0 8px; letter-spacing: -.2px; }
+.doc h3 { font-size: 15px; margin: 26px 0 6px; }
+.doc p, .doc li { color: var(--subtle); }
+.doc li { margin: 4px 0; }
+.doc hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
+/* The invite code, on the one page somebody reads it off a screen to type it
+   into a phone. Wide-spaced and large because that is a transcription, and O
+   against 0 at body size is a wrong cart. */
+.doc p.code { font-size: 40px; font-weight: 800; letter-spacing: 8px; color: var(--accent);
+  background: var(--accent-wash); border-radius: 16px; padding: 22px 12px;
+  text-align: center; margin: 24px 0; }
+.doc #hint { text-align: center; font-size: 13px; color: var(--subtle); margin: 0 0 8px; }
+.doc a.cta { display: block; text-align: center; text-decoration: none;
+  background: var(--accent); color: #FFFFFF; font-size: 16px; font-weight: 700;
+  border-radius: 999px; padding: 16px 20px; margin: 0 0 8px; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); color: var(--subtle); }
+th { color: var(--text); font-weight: 600; }
+.back { display: inline-block; margin: 8px 0 26px; font-size: 14px; color: var(--muted); text-decoration: none; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; gap: 44px; padding: 40px 0 64px; }
+  .phone { margin: 0 auto; }
+  h1 { font-size: 34px; letter-spacing: -1.2px; }
+  .stats, .feats, .steps, .srcs { grid-template-columns: 1fr; }
+  .cats { grid-template-columns: repeat(2, 1fr); }
+  .steps { gap: 32px; }
+  .ache { padding: 40px 26px; border-radius: 20px; }
+  .ache p.big { font-size: 23px; letter-spacing: -.7px; }
+  .stat b { font-size: 32px; }
+}
+</style>
+</head>
+<body><div class="wrap"><div class="nav">
+  <a class="mark" href="./">ttik</a>
+  <div>
+    <a class="small" href="#features">기능</a>
+    <a class="small" href="mailto:ttikteam@gmail.com">문의</a>
+  </div>
+</div><div class="doc"><a class="back" href="./">← ttik</a><h1>ttik 개인정보 처리방침</h1>
+<p>시행일: 2026년 9월 1일</p>
+<p>ttik(이하 &quot;서비스&quot;)은 이상혁(이하 &quot;운영자&quot;)이 제공합니다. 운영자는 「개인정보 보호법」 등 관계 법령을 준수하며, 이용자의 개인정보를 다음과 같이 처리합니다.</p>
+<h2>1. 수집하는 개인정보 항목 및 수집 방법</h2>
+<h3>가. 회원가입 시 수집하는 항목</h3>
+<p>회원가입은 카카오, 구글 또는 Apple 계정으로만 할 수 있습니다. <strong>운영자는 비밀번호를 입력받거나 보관하지 않습니다.</strong></p>
+<table><thead><tr><th>로그인 수단</th><th>항목</th><th>필수 여부</th><th>수집 방법</th></tr></thead><tbody>
+<tr><td>카카오</td><td>카카오 회원번호</td><td>필수</td><td>로그인 시 제공</td></tr>
+<tr><td>카카오</td><td>이메일 주소</td><td>선택</td><td>로그인 시 이용자 동의 후 제공</td></tr>
+<tr><td>구글</td><td>구글 계정 식별자</td><td>필수</td><td>로그인 시 제공</td></tr>
+<tr><td>구글</td><td>이메일 주소, 이름</td><td>필수</td><td>로그인 시 제공</td></tr>
+<tr><td>Apple</td><td>Apple 계정 식별자</td><td>필수</td><td>로그인 시 제공</td></tr>
+<tr><td>Apple</td><td>이메일 주소</td><td>필수</td><td>로그인 시 제공 (이용자가 가리기를 선택하면 Apple이 생성한 전달용 주소)</td></tr>
+<tr><td>Apple</td><td>이름</td><td>선택</td><td>최초 로그인 시 1회에 한해 제공</td></tr>
+</tbody></table>
+<p>카카오에서 이메일 제공에 동의하지 않아도 로그인할 수 있으며, 이 경우 이메일 없이 계정이 생성됩니다.</p>
+<p>구글과 Apple에서 받은 이름은 별명의 최초값으로만 사용하며, 이후 이용자가 마이페이지에서 변경할 수 있습니다.</p>
+<h3>나. 서비스 이용 과정에서 생성·수집되는 항목</h3>
+<table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+<tr><td>찜 목록</td><td>이용자가 찜한 상품의 바코드 번호</td></tr>
+<tr><td>장바구니</td><td>담은 상품, 수량, 이용자가 입력한 매장 가격, 이용자가 선택한 매장</td></tr>
+<tr><td>함께 담는 장바구니</td><td>참여 코드, 참여 이력, 담은 상품 및 입력 가격</td></tr>
+<tr><td>쇼핑 기록</td><td>상품명, 가격, 수량, 매장명, 구매 일시, 함께한 인원 수</td></tr>
+<tr><td>리뷰</td><td>별점, 작성 내용, 작성 일시</td></tr>
+<tr><td>가격 제보</td><td>매장명, 지점명(선택), 이용자가 입력한 가격, 제보 일시</td></tr>
+<tr><td>브랜드 찜</td><td>이용자가 찜한 브랜드</td></tr>
+<tr><td>검색 기록</td><td>검색어 (인기 검색어 집계 목적, 계정과 연결되지 않음)</td></tr>
+<tr><td>스캔 기록</td><td>바코드 번호, 설치 식별자, 스캔 일자 (계정과 연결되지 않음)</td></tr>
+<tr><td>상품 등록 요청</td><td>바코드 번호, 이용자가 입력한 상품명·가격·매장, 설치 식별자</td></tr>
+<tr><td>영수증 인식 요청 기록</td><td>요청 일시, 보낸 사진의 크기, 인식된 줄 수 (사진과 그 내용은 저장하지 않습니다)</td></tr>
+<tr><td>동의 기록</td><td>동의한 약관·처리방침의 판(版), 만 14세 이상 여부, 마케팅 정보 수신 동의 여부, 동의 일시</td></tr>
+</tbody></table>
+<h3>다. 접근 권한</h3>
+<table><thead><tr><th>권한</th><th>필수/선택</th><th>이용 목적</th></tr></thead><tbody>
+<tr><td>카메라</td><td>선택</td><td>상품 바코드 스캔, 영수증 촬영</td></tr>
+<tr><td>사진</td><td>선택</td><td>저장된 영수증 사진 불러오기</td></tr>
+</tbody></table>
+<ul>
+<li>두 권한 모두 허용하지 않아도 검색 등 나머지 기능은 이용할 수 있습니다.</li>
+<li><strong>바코드 스캔</strong>은 기기 안에서만 수행되며, 촬영한 이미지를 저장하거나 외부로 전송하지 않습니다.</li>
+<li><strong>영수증 사진 읽기</strong>는 다릅니다. 이용자가 이 기능을 실행하면 선택한 사진이 문자 인식을 위해 외부로 전송됩니다. 자세한 내용은 아래 7항과 8항을 참고하십시오. 사진 자체는 운영자의 서버에 저장되지 않습니다.</li>
+</ul>
+<h3>라. 계정과 연결되지 않는 정보에 관하여</h3>
+<p>검색 기록과 스캔 기록은 인기 검색어·인기 상품 집계를 위해 수집하며, <strong>이용자 계정과 연결되지 않습니다.</strong></p>
+<p>상품 등록 요청은 카탈로그에 없는 바코드를 확인하기 위해 수집하며, <strong>다른 이용자에게 공개되지 않습니다.</strong> 비회원도 보낼 수 있고, 로그인 상태에서 보낸 경우에만 계정과 연결됩니다.</p>
+<p>스캔 기록과 상품 등록 요청에는 앱 설치 시 무작위로 생성되는 식별자가 포함됩니다. 이는 한 사람이 같은 상품을 반복 스캔하여 순위를 왜곡하는 것을 방지하기 위한 값으로, 이용자나 기기를 식별하지 않으며 앱을 삭제하면 소멸합니다.</p>
+<h3>마. 자동으로 수집되는 정보와 그 거부</h3>
+<p>서비스는 쿠키를 사용하지 않으며, 이용자의 행태정보를 수집하거나 광고 목적으로 제3자에게 제공하지 않습니다. 접속 기록을 분석하는 별도의 통계·광고 도구도 설치되어 있지 않습니다.</p>
+<p>이용자가 직접 입력하지 않아도 생성되는 정보는 위 &#x27;나&#x27;와 &#x27;라&#x27;에 적은 것들입니다 — 설치 식별자, 검색어, 스캔 기록, 그리고 영수증 인식을 요청한 시각·사진 크기·인식된 줄 수입니다. 마지막 것은 한 사람이 지나치게 자주 요청하는 것을 막고 비용을 확인하기 위한 값이며, 사진이나 그 내용은 담지 않습니다.</p>
+<p>설치 식별자의 수집을 원하지 않는 경우 앱을 삭제하면 식별자가 소멸하며, 이후 다시 설치하면 이전 값과 무관한 새 식별자가 생성됩니다.</p>
+<p>서비스 운영에 이용하는 Supabase, Inc. 및 Google LLC 는 각자의 서버에서 접속 기록 등을 남길 수 있습니다. 이는 해당 사업자가 자신의 서비스를 제공·보호하기 위한 것으로, 운영자가 그 기록을 수집하거나 열람하지 않습니다.</p>
+<h2>2. 개인정보의 처리 목적</h2>
+<ul>
+<li>회원 식별 및 로그인 등 계정 관리</li>
+<li>찜, 장바구니, 쇼핑 기록 등 이용자별 기능 제공</li>
+<li>함께 담는 장바구니의 참여자 간 정보 공유</li>
+<li>리뷰 작성자 표시</li>
+<li>인기 검색어 및 인기 상품 통계 제공</li>
+<li>등록되지 않은 상품의 확인 및 카탈로그 추가</li>
+<li>영수증 사진에서 구매 내역을 읽어 장바구니와 쇼핑 기록에 담기</li>
+<li>서비스 부정 이용 방지</li>
+<li>동의를 받은 사실의 보관 및 증명</li>
+<li><strong>(선택)</strong> 마케팅 정보 수신에 동의한 이용자에게 신규 상품, 할인 쿠폰 갱신, 서비스 변경 사항을 안내</li>
+</ul>
+<p>10번은 <strong>선택 항목</strong>입니다. 동의하지 않아도 서비스의 모든 기능을 이용할 수 있으며, 동의한 뒤에도 <strong>마이페이지 &gt; 마케팅 정보 수신</strong>에서 언제든 해제할 수 있습니다. 해제는 즉시 적용됩니다.</p>
+<h2>2-1. 광고성 정보의 전송</h2>
+<p>위 10번의 안내는 전자우편 등 전자적 전송매체로 보냅니다. 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」에 따라 다음을 지킵니다.</p>
+<ul>
+<li>광고성 정보는 <strong>수신에 명시적으로 동의한 이용자에게만</strong> 보냅니다.</li>
+<li><strong>오후 9시부터 다음 날 오전 8시까지</strong>는 별도의 동의를 받지 않는 한 보내지 않습니다.</li>
+<li>보내는 정보에는 운영자의 이름과 연락처, 수신을 거부하는 방법을 함께 밝힙니다.</li>
+<li>수신 거부나 동의 철회를 어렵게 하거나 방해하는 조치를 하지 않습니다. 철회는 <strong>마이페이지 &gt; 마케팅 정보 수신</strong>에서 즉시 적용되며, 그 결과를 확인하실 수 있습니다.</li>
+<li>연락처를 자동으로 만들어 내거나 수집하여 전송하지 않으며, 보내는 사람이나 출처를 감추지 않습니다.</li>
+</ul>
+<h2>3. 개인정보의 보유 및 이용 기간</h2>
+<ul>
+<li>이용자의 개인정보는 <strong>회원 탈퇴 시 지체 없이 파기</strong>합니다.</li>
+<li>다만 다음의 경우 해당 기간 동안 보관합니다.</li>
+</ul>
+<table><thead><tr><th>항목</th><th>보관 기간</th><th>근거</th></tr></thead><tbody>
+<tr><td>부정 이용 기록 (반복 요청 횟수, 요청 일시, 설치 식별자)</td><td>1년</td><td>서비스 부정 이용 방지</td></tr>
+<tr><td>동의 기록 (동의한 약관·처리방침의 판, 동의 일시)</td><td>회원 탈퇴 시까지</td><td>동의를 받은 사실의 확인 및 관리</td></tr>
+</tbody></table>
+<ul>
+<li>계정과 연결되지 않는 검색·스캔 기록은 통계 목적으로 보관되며, 탈퇴 시에도 개인을 식별할 수 없는 형태로 남습니다.</li>
+</ul>
+<h2>4. 개인정보의 파기</h2>
+<ul>
+<li>회원 탈퇴 시 계정 정보, 별명, 찜, 브랜드 찜, 장바구니, 쇼핑 기록, 리뷰, 가격 제보가 즉시 삭제됩니다.</li>
+<li>전자적 파일 형태의 정보는 복구할 수 없는 방법으로 영구 삭제합니다.</li>
+<li>이용자가 방장으로 있는 함께 담는 장바구니는 탈퇴와 함께 삭제됩니다.</li>
+</ul>
+<h2>5. 개인정보의 제3자 제공</h2>
+<p>서비스는 이용자의 개인정보를 제3자에게 제공하지 않습니다. 다만 다음의 경우는 예외로 합니다.</p>
+<ul>
+<li>이용자가 사전에 동의한 경우</li>
+<li>법령에 따라 수사기관이 적법한 절차에 따라 요구하는 경우</li>
+</ul>
+<h3>서비스 안에서의 공개</h3>
+<p>아래는 제3자 제공이 아니라, <strong>이용자가 스스로 글을 남기거나 다른 이용자를 초대할 때 그 내용이 서비스 안에서 보이는 것</strong>입니다. 운영자가 개인정보를 밖으로 넘기는 것이 아니므로 위 표와 구분하여 적습니다.</p>
+<table><thead><tr><th>무엇을 할 때</th><th>누구에게</th><th>무엇이 보이나</th></tr></thead><tbody>
+<tr><td>리뷰 작성</td><td>모든 이용자</td><td>별명, 작성 내용, 별점, 작성 일시</td></tr>
+<tr><td>가격 제보</td><td>모든 이용자</td><td>매장명, 지점명(선택), 가격 — <strong>작성자는 표시되지 않습니다</strong></td></tr>
+<tr><td>함께 담는 장바구니</td><td>같은 장바구니 참여자</td><td>담은 상품, 수량, 입력한 가격, 매장, 담은 사람의 별명</td></tr>
+</tbody></table>
+<p><strong>함께 담는 장바구니 이용 시 유의사항</strong> — 해당 장바구니에 담긴 상품, 수량, 입력한 매장 가격, 매장 정보는 같은 장바구니에 참여한 다른 이용자에게 공개됩니다. 이는 기능의 성격에 따른 것으로, 참여 코드를 공유할 때 유의하시기 바랍니다.</p>
+<p><strong>리뷰 작성 시 유의사항</strong> — 리뷰를 작성하면 별명과 작성 내용이 모든 이용자에게 공개됩니다.</p>
+<p><strong>가격 제보 시 유의사항</strong> — 제보하신 매장명, 지점명, 가격은 해당 상품을 보는 모든 이용자에게 공개됩니다. 지점명은 선택 입력이며, 적지 않으셔도 가격은 매장 이름으로 공개됩니다. 다만 <strong>누가 제보했는지는 표시되지 않으며</strong>, 별명도 공개되지 않습니다.</p>
+<h2>6. 개인정보 처리의 위탁</h2>
+<p>서비스는 원활한 운영을 위해 다음과 같이 개인정보 처리를 위탁하고 있습니다.</p>
+<table><thead><tr><th>수탁자</th><th>위탁 업무</th><th>보유 기간</th></tr></thead><tbody>
+<tr><td>Supabase, Inc.</td><td>데이터베이스 운영, 회원 인증, 데이터 보관</td><td>위탁 계약 종료 시까지</td></tr>
+<tr><td>Google LLC</td><td>영수증 사진의 문자 인식 (Cloud Vision API)</td><td>메모리에서 처리하며 디스크에 저장하지 않음</td></tr>
+</tbody></table>
+<h2>6-1. 소셜 로그인 사업자로부터 제공받는 개인정보</h2>
+<p>소셜 로그인을 이용하는 경우, 회원 식별을 위해 아래와 같이 개인정보를 제공받습니다. 보유 기간은 <strong>운영자가 제공받은 정보를 보관하는 기간</strong>이며, 각 사업자가 자신의 서비스에서 보유하는 기간은 해당 사업자의 처리방침에 따릅니다.</p>
+<table><thead><tr><th>제공하는 자</th><th>제공받는 항목</th><th>이용 목적</th><th>운영자의 보유 기간</th></tr></thead><tbody>
+<tr><td>주식회사 카카오</td><td>카카오 회원번호, 이메일 주소(동의 시)</td><td>회원 식별 및 로그인</td><td>회원 탈퇴 시까지</td></tr>
+<tr><td>Google LLC</td><td>구글 계정 식별자, 이메일 주소, 이름</td><td>회원 식별 및 로그인</td><td>회원 탈퇴 시까지</td></tr>
+<tr><td>Apple Inc.</td><td>Apple 계정 식별자, 이메일 주소, 이름(최초 1회)</td><td>회원 식별 및 로그인</td><td>회원 탈퇴 시까지</td></tr>
+</tbody></table>
+<h2>7. 개인정보의 국외 이전</h2>
+<p><strong>법적 근거</strong> — 서비스 이용계약의 체결 및 이행에 필요한 개인정보의 처리위탁·보관을 위한 국외 이전이며(개인정보 보호법 제28조의8 제1항 제3호), 같은 조 제2항 각 호의 사항을 이 처리방침으로 공개합니다. 별도의 동의를 받지 않는 것은 이 때문입니다.</p>
+<p>서비스는 데이터 보관 및 처리를 위해 다음과 같이 개인정보를 국외로 이전합니다.</p>
+<table><thead><tr><th>구분</th><th>내용</th></tr></thead><tbody>
+<tr><td>이전받는 자</td><td>Supabase, Inc.</td></tr>
+<tr><td>이전 국가</td><td>미국</td></tr>
+<tr><td>이전 일시 및 방법</td><td>서비스 이용 시 네트워크를 통해 수시 전송</td></tr>
+<tr><td>이전 항목</td><td>이메일 주소, 별명, 찜·장바구니·쇼핑 기록·리뷰 등 서비스 이용 정보</td></tr>
+<tr><td>이전 목적</td><td>데이터베이스 운영 및 회원 인증</td></tr>
+<tr><td>보유 기간</td><td>회원 탈퇴 시까지</td></tr>
+</tbody></table>
+<p>이용자가 영수증 사진 읽기 기능을 실행하는 경우, 아래와 같이 개인정보를 국외로 이전합니다.</p>
+<table><thead><tr><th>구분</th><th>내용</th></tr></thead><tbody>
+<tr><td>이전받는 자</td><td>Google LLC</td></tr>
+<tr><td>이전 국가</td><td>미국</td></tr>
+<tr><td>이전 일시 및 방법</td><td>이용자가 영수증 사진 읽기를 실행할 때 네트워크를 통해 전송</td></tr>
+<tr><td>이전 항목</td><td>이용자가 선택한 영수증 사진 (구매 상품명, 금액, 매장명, 구매 일시가 포함될 수 있습니다)</td></tr>
+<tr><td>이전 목적</td><td>영수증에 인쇄된 문자의 인식</td></tr>
+<tr><td>보유 기간</td><td>사진은 메모리에서 처리되며 디스크에 저장되지 않습니다. 다만 Google 이 요청 시각·크기 등 일부 메타데이터를 일시적으로 기록합니다</td></tr>
+</tbody></table>
+<p>이용자는 개인정보의 국외 이전을 거부할 수 있으나, 이 경우 회원 기능을 이용할 수 없습니다. 영수증 사진 읽기는 이용자가 직접 실행할 때만 동작하므로, 이 기능을 사용하지 않으면 사진은 전송되지 않습니다.</p>
+<h2>8. 외부 서비스 연동</h2>
+<p>서비스는 상품 및 가격 정보 제공을 위해 다음 외부 서비스를 이용합니다. <strong>이 과정에서 계정 식별자·이메일 주소 등 이용자를 직접 식별할 수 있는 정보는 전달하지 않으며</strong>, 상품 바코드·상품명 등 조회에 필요한 정보만 전달됩니다. 다만 인터넷 통신의 성질상 접속에 관한 정보(IP 주소 등)는 해당 사업자에게 전달될 수 있습니다.</p>
+<p>매장 위치는 외부에 조회하지 않습니다. OpenStreetMap 기여자가 만든 데이터를 미리 받아 서비스의 데이터베이스에 담아 두고 그것만 읽습니다(ODbL 라이선스, 이용약관 제12조).</p>
+<table><thead><tr><th>외부 서비스</th><th>이용 목적</th></tr></thead><tbody>
+<tr><td>라쿠텐 (Rakuten Ichiba API)</td><td>일본 상품 정보 및 가격 조회</td></tr>
+<tr><td>환율 정보 API (open.er-api.com)</td><td>엔화-원화 환산</td></tr>
+<tr><td>Google Cloud Vision API</td><td>영수증 사진의 문자 인식</td></tr>
+</tbody></table>
+<p><strong>다만 영수증 사진 읽기 기능은 다릅니다.</strong> 이용자가 이 기능을 실행한 경우에 한하여, 선택한 영수증 사진이 문자 인식을 위해 Google LLC 의 Cloud Vision API 로 전송됩니다.</p>
+<ul>
+<li>사진은 Google 의 메모리에서 처리되며 디스크에 저장되지 않습니다. Google 은 문자 인식 외의 목적으로 사진을 사용하지 않고, 제3자와 공유하지 않습니다.</li>
+<li>다만 Google 은 서비스 개선과 오·남용 방지를 위해 <strong>요청 시각과 요청 크기 등 일부 메타데이터를 일시적으로 기록</strong>합니다. 사진의 내용은 여기에 포함되지 않습니다.</li>
+<li>운영자가 기록하는 것은 인식을 몇 번 요청했는지와 보낸 사진의 크기뿐이며, 사진이나 그 내용은 기록하지 않습니다.</li>
+<li>이 기능을 실행하지 않으면 사진은 전송되지 않습니다.</li>
+</ul>
+<p>또한 서비스는 상품을 구매할 수 있는 곳으로 이동하는 링크를 제공합니다. 이용자가 링크를 선택하면 해당 쇼핑몰 또는 제휴 네트워크로 이동하며, 이후의 개인정보 처리는 각 사업자의 처리방침에 따릅니다.</p>
+<table><thead><tr><th>이동하는 곳</th><th>용도</th></tr></thead><tbody>
+<tr><td>아마존 재팬 (amazon.co.jp)</td><td>한국 직배송 구매</td></tr>
+<tr><td>쿠팡</td><td>한국 판매 가격 확인 및 구매</td></tr>
+<tr><td>네이버 쇼핑</td><td>한국 판매 가격 확인 및 구매</td></tr>
+<tr><td>브랜드 공식 온라인몰</td><td>한국 판매 가격 확인 및 구매</td></tr>
+</tbody></table>
+<p>아마존 재팬과 쿠팡으로 이동하는 링크의 일부에는 제휴 식별자가 포함되어 있어, 이를 통해 구매가 이루어지면 운영자가 수수료를 받습니다. <strong>구매 가격은 달라지지 않으며</strong>, 운영자는 제휴 보고서로 구매 건수와 수수료만 받을 뿐 이용자의 성명·이메일 등 직접 식별정보를 제공받지 않습니다. 제휴 링크가 붙은 자리에는 상품 화면에 그 사실이 표시됩니다.</p>
+<p>이용자가 서비스 내 링크를 통해 외부 쇼핑몰로 이동하는 경우, 해당 사이트에서의 개인정보 처리는 각 사업자의 개인정보 처리방침을 따릅니다.</p>
+<h2>9. 이용자의 권리와 행사 방법</h2>
+<p>이용자는 언제든지 다음의 권리를 행사할 수 있습니다.</p>
+<table><thead><tr><th>권리</th><th>행사 방법</th></tr></thead><tbody>
+<tr><td>별명 변경</td><td>마이페이지에서 직접 수정</td></tr>
+<tr><td>쇼핑 기록 삭제</td><td>쇼핑 기록 화면에서 개별 삭제</td></tr>
+<tr><td>리뷰 수정·삭제</td><td>상품 화면 또는 마이페이지 &gt; 내가 쓴 리뷰</td></tr>
+<tr><td>찜·장바구니 삭제</td><td>각 화면에서 직접 삭제</td></tr>
+<tr><td>마케팅 정보 수신 동의·철회</td><td>마이페이지 &gt; 마케팅 정보 수신</td></tr>
+<tr><td>열람·정정·처리정지 요구</td><td>아래 연락처로 요청</td></tr>
+<tr><td>회원 탈퇴 (전체 삭제)</td><td>마이페이지 &gt; 회원탈퇴</td></tr>
+</tbody></table>
+<p>이용자는 법정대리인이나 위임을 받은 자를 통해서도 위 권리를 행사할 수 있습니다. 이 경우 「개인정보 처리 방법에 관한 고시」 별지 제11호 서식에 따른 위임장을 개인정보 보호책임자에게 제출해 주시기 바랍니다.</p>
+<p>운영자는 열람·정정·삭제·처리정지 요구를 받은 경우 정당한 사유가 없는 한 10일 이내에 조치하고 그 결과를 알려드립니다. 요구를 거절하는 경우에는 그 사유와 이의제기 방법을 함께 안내합니다.</p>
+<h2>10. 만 14세 미만 아동의 개인정보</h2>
+<p>서비스는 만 14세 미만 아동의 회원가입을 받지 않습니다. 만 14세 미만 아동의 개인정보가 수집된 사실이 확인되면 지체 없이 파기합니다.</p>
+<h2>11. 개인정보의 안전성 확보 조치</h2>
+<ul>
+<li>로그인은 카카오·구글·Apple 계정으로만 이루어지며, 운영자는 비밀번호를 수집하거나 보관하지 않습니다.</li>
+<li>데이터베이스에 행 수준 접근 제어를 적용하여, 이용자는 자신의 데이터에만 접근할 수 있습니다.</li>
+<li>개인정보를 처리하는 인원을 최소한으로 제한합니다.</li>
+<li>서비스와 서버 간 통신은 암호화(HTTPS)하여 전송합니다.</li>
+</ul>
+<h2>11-1. 개인정보 유출 등에 대한 조치</h2>
+<p>개인정보가 분실·도난·유출된 사실을 알게 된 경우, 운영자는 <strong>지체 없이</strong> 다음을 해당 이용자에게 알립니다.</p>
+<ul>
+<li>유출된 개인정보의 항목</li>
+<li>유출이 발생한 시점과 그 경위</li>
+<li>이용자가 피해를 줄이기 위해 취할 수 있는 조치</li>
+<li>운영자의 대응 조치와 피해 구제 절차</li>
+<li>상담 등을 접수할 수 있는 연락처</li>
+</ul>
+<p>법령이 정한 규모 이상의 유출인 경우에는 개인정보보호위원회 또는 한국인터넷진흥원에 신고합니다.</p>
+<p>이용자의 연락처를 알 수 없는 등 알릴 방법이 없는 정당한 사유가 있는 경우에는, 서비스 화면과 웹사이트에 <strong>30일 이상</strong> 게시하는 것으로 통지를 갈음합니다. 소셜 로그인 시 이메일 제공에 동의하지 않은 계정이 여기에 해당할 수 있습니다.</p>
+<h2>12. 개인정보 보호책임자</h2>
+<p>개인정보 처리에 관한 문의, 불만 처리, 피해 구제는 아래로 연락하시기 바랍니다.</p>
+<ul>
+<li>개인정보 보호책임자: 이상혁</li>
+<li>직책: 운영자</li>
+<li>전화번호: 010-4396-0319</li>
+<li>이메일: ttikteam@gmail.com</li>
+</ul>
+<p>개인정보 열람·정정·삭제·처리정지 청구는 아래로 접수합니다. 운영자가 1인이므로 보호책임자가 직접 접수하고 처리합니다.</p>
+<ul>
+<li>개인정보 열람청구 접수·처리 담당: 이상혁</li>
+<li>접수 방법: ttikteam@gmail.com (전자우편) 또는 010-4396-0319</li>
+</ul>
+<p>운영자의 답변에 만족하지 못하셨거나 분쟁 해결이 필요한 경우, 개인정보 분쟁조정위원회에 조정을 신청하실 수 있습니다.</p>
+<ul>
+<li>개인정보 분쟁조정위원회 (kopico.go.kr / 1833-6972)</li>
+</ul>
+<p>기타 개인정보 침해에 대한 신고나 상담이 필요한 경우 아래 기관에 문의하실 수 있습니다.</p>
+<ul>
+<li>개인정보침해 신고센터 (privacy.kisa.or.kr / 국번없이 118)</li>
+<li>대검찰청 사이버수사과 (spo.go.kr / 국번없이 1301)</li>
+<li>경찰청 사이버수사국 (ecrm.police.go.kr / 국번없이 182)</li>
+</ul>
+<p>「개인정보 보호법」 제35조(열람), 제36조(정정·삭제), 제37조(처리정지 등)에 따른 요구에 대하여 공공기관의 장이 한 처분 또는 부작위로 권리나 이익을 침해받은 경우에는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.</p>
+<ul>
+<li>중앙행정심판위원회 (simpan.go.kr / 국번없이 110)</li>
+</ul>
+<h2>13. 개인정보 처리방침의 변경</h2>
+<p>개인정보 처리방침이 변경되는 경우 <strong>변경 내용과 시행일을 시행 전에</strong> 서비스 화면과 웹사이트에서 쉽게 확인할 수 있도록 공개합니다. 이용자에게 불리하거나 중요한 변경이 있는 경우에는 시행 7일 전부터 고지합니다.</p>
+<p>무엇이 언제부터 달라졌는지는 아래 변경 이력에 적습니다.</p>
+<p>새로운 개인정보를 수집하거나 이용 목적이 달라져 별도의 동의가 필요한 경우에는, 처리방침을 고치는 것과 별개로 그 사항을 알리고 동의를 받습니다.</p>
+<h3>변경 이력</h3>
+<table><thead><tr><th>시행일</th><th>주요 변경 내용</th></tr></thead><tbody>
+<tr><td>2026년 9월 1일</td><td>제정</td></tr>
+</tbody></table>
+<hr>
+<p>시행일: 2026년 9월 1일</p></div><div class="foot">
+  <a href="./">ttik</a><a href="./privacy.html">개인정보 처리방침</a><a href="./terms.html">이용약관</a><a href="./delete-account.html">계정 삭제</a>
+  <p style="margin-top:12px">문의 <a href="mailto:ttikteam@gmail.com">ttikteam@gmail.com</a></p>
+</div></div>
+<script>
+document.querySelectorAll('[data-rise]').forEach(function (el) { el.classList.add('rise'); });
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+  });
+}, { rootMargin: '0px 0px -12% 0px' });
+document.querySelectorAll('.rise').forEach(function (el) { io.observe(el); });
+// Nothing about an entrance is worth a blank page. If the observer has not run
+// by now — a hidden tab that never paints, an engine that throttles it, a bug
+// of mine — everything simply appears. The animation is the enhancement; the
+// words are the page.
+setTimeout(function () {
+  document.querySelectorAll('.rise').forEach(function (el) { el.classList.add('in'); });
+}, 2500);
+</script>
+</body>
+</html>
