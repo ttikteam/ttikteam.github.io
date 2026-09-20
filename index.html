@@ -75,7 +75,7 @@ h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 80
 .cat b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -.8px; }
 .cat span { font-size: 13px; color: var(--muted); }
 
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border);
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border);
   border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
 .stat { background: var(--bg); padding: 26px 22px; }
 .stat b { display: block; font-size: 40px; font-weight: 800; letter-spacing: -1.6px; color: var(--accent); }
@@ -88,6 +88,9 @@ h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 80
   border-radius: 12px; padding: 10px 16px; background: var(--canvas); color: var(--muted);
   font-size: 14px; font-weight: 600; }
 .get svg { width: 17px; height: 17px; fill: currentColor; }
+/* 나가 있는 스토어는 검은 단추. 회색 둘 사이에 하나만 살아 있으면 어디를 눌러야 하는지
+   설명이 필요 없습니다. */
+.get.live { background: var(--ink); color: var(--on-ink); border-color: var(--ink); text-decoration: none; }
 .soon { font-size: 12px; color: var(--muted); margin-top: 10px; }
 
 /* The one place the page raises its voice. Nothing else is set this large,
@@ -188,10 +191,10 @@ th { color: var(--text); font-weight: 600; }
        앞에서 확인하고, 돌아와 다시 사고 싶을 때 어디서 살지 찾습니다.</p>
 
     <div class="gets">
-      <span class="get"><svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.931.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> App Store</span>
+      <a class="get live" href="https://apps.apple.com/kr/app/id6799801905"><svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.931.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> App Store에서 받기</a>
       <span class="get"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M325.3 234.3 104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg> Google Play</span>
     </div>
-    <p class="soon">두 스토어 모두 출시를 준비하고 있습니다.</p>
+    <p class="soon">Google Play는 준비하고 있습니다.</p>
   </div>
 
   <div class="phone">
@@ -203,7 +206,6 @@ th { color: var(--text); font-weight: 600; }
 <div class="stats" data-rise>
   <div class="stat"><b>9,941</b><span>등록된 상품</span></div>
   <div class="stat"><b>148</b><span>브랜드</span></div>
-  <div class="stat"><b>1232</b><span>본품·리필 묶음</span></div>
 </div>
 
 <div class="ache" data-rise>
@@ -290,11 +292,6 @@ th { color: var(--text); font-weight: 600; }
       <p>장바구니를 공유하면 누가 무엇을 담았는지 보이고, 면세 기준 금액까지
          얼마나 남았는지도 함께 확인합니다.</p>
     </div>
-    <div class="feat">
-      <h3>본품과 리필을 한자리에</h3>
-      <p>같은 제품의 다른 용량과 리필을 묶어서 보여줍니다. 일본어 표기가
-         제각각이어도 같은 물건이면 한자리에 모입니다.</p>
-    </div>
   </div>
 </div>
 
@@ -304,8 +301,8 @@ th { color: var(--text); font-weight: 600; }
 </div>
 
 <div class="note" data-rise>
-  <h3>출시 준비 중</h3>
-  <p>App Store 출시를 준비하고 있습니다. 제휴 제안이나 문의는
+  <h3>문의</h3>
+  <p>App Store에서 받을 수 있습니다. 제휴 제안이나 문의는
      <a href="mailto:ttikteam@gmail.com">ttikteam@gmail.com</a>로 보내주세요.</p>
 </div>
 <div class="foot">
