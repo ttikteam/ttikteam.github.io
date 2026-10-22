@@ -39,6 +39,10 @@ body {
   margin: 0; background: var(--bg); color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
   line-height: 1.7; -webkit-font-smoothing: antialiased;
+  /* 한국어는 기본값이면 낱말 한가운데서 줄을 바꾼다(「이용 / 자 제보로」, 운영자 2026-10-23).
+     keep-all 은 띄어쓰기에서만 바꾸고, 너무 긴 낱말(주소·바코드)만 넘칠 때 자른다.
+     pretty 는 마지막 줄에 한 낱말만 남는 것을 줄인다(지원하는 브라우저에서만). */
+  word-break: keep-all; overflow-wrap: break-word; text-wrap: pretty;
 }
 a { color: inherit; }
 .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
@@ -158,6 +162,77 @@ th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--bor
 th { color: var(--text); font-weight: 600; }
 .back { display: inline-block; margin: 8px 0 26px; font-size: 14px; color: var(--muted); text-decoration: none; }
 
+/* ── 첫 화면 개편(2026-10-23, 운영자 「스타트업 느낌으로」) ─────────────────
+   바탕은 그대로 흑백 + 파랑 하나. 넓은 띠(.bleed)만 검은 바탕으로 리듬을 준다. */
+.bleed { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+/* 100vw 는 세로 스크롤바 폭까지 넣어 가로 스크롤이 생긴다 — 넘친 만큼은 잘라 낸다. */
+html, body { overflow-x: clip; }
+.nav .getbtn { font-size: 13px; font-weight: 700; color: var(--on-ink); background: var(--ink);
+  border-radius: 999px; padding: 8px 14px; text-decoration: none; margin-left: 18px; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.pill .dot { display: inline-block; width: 7px; height: 7px; border-radius: 99px; background: var(--accent);
+  margin-right: 7px; vertical-align: 1px; box-shadow: 0 0 0 4px var(--accent-wash); }
+.trust { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 22px; font-size: 13px; color: var(--muted); }
+.trust b { color: var(--text); font-weight: 700; }
+.stage { position: relative; }
+.stage::before { content: ''; position: absolute; inset: -40px -60px; z-index: -1;
+  background: radial-gradient(closest-side, var(--accent-wash), transparent 70%); }
+.chip { position: absolute; background: var(--bg); border: 1px solid var(--border); border-radius: 14px;
+  padding: 10px 14px; box-shadow: 0 12px 30px rgba(0,0,0,.10); font-size: 12px; color: var(--muted);
+  line-height: 1.35; white-space: nowrap; }
+.chip b { display: block; font-size: 15px; color: var(--text); letter-spacing: -.3px; }
+.chip.a { left: -78px; top: 34%; } .chip.b { right: -64px; top: 62%; }
+.chip.b b { color: var(--accent); }
+
+.band { background: #0B0B0D; color: #F4F4F6; }
+.band .in { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.nums { display: grid; grid-template-columns: repeat(3, 1fr); padding: 44px 0; gap: 24px; }
+.nums b { display: block; font-size: 40px; font-weight: 800; letter-spacing: -1.6px; }
+.nums span { font-size: 13px; color: #9A9BA3; }
+
+.tour { padding: 84px 0 92px; margin-top: 96px; }
+.tour h2.t { font-size: 34px; letter-spacing: -1.2px; line-height: 1.25; margin: 0; font-weight: 800; }
+.tour p.t { color: #9A9BA3; margin: 12px 0 0; font-size: 16px; }
+.reel { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 36px 24px 8px;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.reel::-webkit-scrollbar { display: none; }
+.tcard { flex: 0 0 236px; margin: 0; scroll-snap-align: center; }
+.tcard img { width: 100%; height: auto; display: block; border-radius: 22px; border: 1px solid #222329; }
+@media (min-width: 1000px) { .reel { padding-left: calc(50vw - 456px); padding-right: calc(50vw - 456px); } }
+.reel-nav { display: flex; gap: 8px; margin-top: 18px; }
+.reel-nav button { width: 40px; height: 40px; border-radius: 99px; border: 1px solid #2B2C33; background: transparent;
+  color: #F4F4F6; font-size: 18px; cursor: pointer; }
+
+.grid6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.card { border: 1px solid var(--border); border-radius: 18px; padding: 24px 22px; background: var(--bg); }
+.card .ic { width: 40px; height: 40px; border-radius: 12px; background: var(--accent-wash); color: var(--accent);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.card .ic svg { width: 21px; height: 21px; }
+.card h3 { font-size: 16px; letter-spacing: -.4px; margin: 0 0 6px; }
+.card p { font-size: 13.5px; color: var(--subtle); margin: 0; }
+.card .new { font-size: 10.5px; font-weight: 800; color: var(--accent); margin-left: 6px; letter-spacing: .3px; }
+.sec h2.lead { font-size: 30px; color: var(--text); letter-spacing: -1px; font-weight: 800; margin: 0 0 8px; }
+.sec p.lead { font-size: 15px; color: var(--subtle); margin: 0 0 30px; }
+
+.cta { margin-top: 104px; padding: 72px 0; text-align: center; }
+.cta h2 { font-size: 34px; letter-spacing: -1.2px; line-height: 1.3; margin: 0; font-weight: 800; }
+.cta p { color: #9A9BA3; margin: 12px 0 0; }
+.cta .gets { justify-content: center; }
+.cta .get { background: #17181C; border-color: #2B2C33; color: #7E7F88; }
+.cta .get.live { background: #FFFFFF; color: #0B0B0D; border-color: #FFFFFF; }
+
+@media (max-width: 760px) {
+  .chip { display: none; }
+  .nums { grid-template-columns: 1fr 1fr; } .nums div:last-child { grid-column: span 2; }
+  .nums b { font-size: 30px; }
+  .tour h2.t, .cta h2 { font-size: 26px; }
+  .grid6 { grid-template-columns: 1fr; }
+  .tcard { flex-basis: 70vw; }
+  .reel-nav { display: none; }
+  .sec h2.lead { font-size: 24px; }
+  .nav .small { display: none; }
+}
+
 @media (max-width: 760px) {
   .hero { grid-template-columns: 1fr; gap: 44px; padding: 40px 0 64px; }
   .phone { margin: 0 auto; }
@@ -174,38 +249,45 @@ th { color: var(--text); font-weight: 600; }
 <body><div class="wrap"><div class="nav">
   <a class="mark" href="./">ttik</a>
   <div>
-    <a class="small" href="#how">쓰는 법</a>
+    <a class="small" href="#tour">둘러보기</a>
+    <a class="small" href="#features">기능</a>
     <a class="small" href="#where">가격 출처</a>
-    <a class="small" href="#features">그 밖에</a>
     <a class="small" href="mailto:ttikteam@gmail.com">문의</a>
+    <a class="getbtn" href="https://apps.apple.com/kr/app/id6799801905">앱 받기</a>
   </div>
 </div>
 
 <div class="hero">
   <div>
-    <span class="pill">일본 여행 쇼핑</span>
-    <h1>일본 여행 중 살까 말까,<br>띡 한번이면 끝</h1>
+    <span class="pill"><span class="dot"></span>일본 여행 쇼핑 앱</span>
+    <h1>일본 여행 중 살까 말까,<br><em>띡</em> 한번이면 끝</h1>
     <p>매장에서 바코드를 찍으면 그 상품이 무엇인지, 일본 현지 시세가 얼마인지,
        한국에서는 어떤지 한 화면에서 확인해요. 일본어를 몰라도 돼요.</p>
-    <p>여행을 준비할 때부터 다녀온 뒤까지 써요. 살 것을 미리 담아두고, 매대
-       앞에서 확인하고, 돌아와 다시 사고 싶을 때 어디서 살지 찾아요.</p>
 
     <div class="gets">
       <a class="get live" href="https://apps.apple.com/kr/app/id6799801905"><svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.931.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> App Store에서 받기</a>
       <span class="get"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M325.3 234.3 104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg> Google Play</span>
     </div>
     <p class="soon">Google Play는 준비하고 있어요.</p>
+    <div class="trust"><span><b>18,182</b>개 상품</span><span><b>289</b>개 브랜드</span><span>무료</span><span>일본어 몰라도 OK</span></div>
   </div>
 
-  <div class="phone">
-    <div class="screen"><img src="shots/home.webp?v=8d1807b8" width="540" height="1103"
-      alt="ttik 홈 화면 — 바코드 스캔 배너와 카테고리"></div>
+  <div class="stage">
+    <div class="phone">
+      <div class="screen"><img src="shots/home.webp?v=c79a652a" width="540" height="1103"
+        alt="ttik 홈 화면 — 바코드 스캔 배너, 카테고리, 인기 브랜드"></div>
+    </div>
+    <div class="chip a">바코드를 찍으면<b>한국어 상품명</b></div>
+    <div class="chip b">란도린 섬유탈취제<b>일본이 ₩5,408 싸요</b></div>
   </div>
 </div>
 
-<div class="stats" data-rise>
-  <div class="stat"><b>18,011</b><span>등록된 상품</span></div>
-  <div class="stat"><b>288</b><span>브랜드</span></div>
+<div class="band bleed" data-rise>
+  <div class="in nums">
+    <div><b>18,182</b><span>등록된 일본 상품</span></div>
+    <div><b>289</b><span>브랜드</span></div>
+    <div><b>5</b><span>카테고리 · 뷰티부터 의약품까지</span></div>
+  </div>
 </div>
 
 <div class="ache" data-rise>
@@ -216,8 +298,20 @@ th { color: var(--text); font-weight: 600; }
      앞에서 간편하게 띡 알려줘요.</p>
 </div>
 
+<div class="band bleed tour" id="tour">
+  <div class="in">
+    <h2 class="t">띡, 이렇게 써요</h2>
+    <p class="t">바코드 한 번으로 시작해 영수증까지 — 앱 화면 그대로예요.</p>
+    <div class="reel-nav" aria-hidden="true">
+      <button type="button" data-dir="-1">‹</button><button type="button" data-dir="1">›</button>
+    </div>
+  </div>
+  <div class="reel" id="reel"><figure class="tcard"><img src="shots/tour-01.webp" width="640" height="1391" loading="lazy" alt="일본 여행 중 ttik으로 띡 — 바코드만 찍으면 한국어로"></figure><figure class="tcard"><img src="shots/tour-02.webp" width="640" height="1391" loading="lazy" alt="무슨 상품인지 바로 알아요 — 이름과 설명이 한국어로"></figure><figure class="tcard"><img src="shots/tour-03.webp" width="640" height="1391" loading="lazy" alt="일본에서 살까, 한국에서 살까 — 한국 판매가까지"></figure><figure class="tcard"><img src="shots/tour-04.webp" width="640" height="1391" loading="lazy" alt="살 곳도, 리뷰 영상도 바로 연결"></figure><figure class="tcard"><img src="shots/tour-05.webp" width="640" height="1391" loading="lazy" alt="한국에서도 한국어로 둘러보기 — 카테고리·브랜드"></figure><figure class="tcard"><img src="shots/tour-06.webp" width="640" height="1391" loading="lazy" alt="일행과 함께 담는 장바구니"></figure><figure class="tcard"><img src="shots/tour-07.webp" width="640" height="1391" loading="lazy" alt="찍을수록 채워지는 도감"></figure><figure class="tcard"><img src="shots/tour-08.webp" width="640" height="1391" loading="lazy" alt="면세까지 얼마 남았는지"></figure><figure class="tcard"><img src="shots/tour-09.webp" width="640" height="1391" loading="lazy" alt="영수증을 찍으면 산 것이 한국어로"></figure></div>
+</div>
+
 <div class="sec" id="how" data-rise>
-  <h2>여행 전 · 여행 중 · 여행 후</h2>
+  <h2 class="lead">여행 전 · 여행 중 · 여행 후</h2>
+  <p class="lead">일본 여행 전부터 다녀온 뒤까지 쓰는 앱이에요.</p>
   <div class="steps">
     <div class="step">
       <span class="n">1</span>
@@ -234,34 +328,53 @@ th { color: var(--text); font-weight: 600; }
     </div>
     <div class="step">
       <span class="n">3</span>
-      <h3>다시 사고 싶을 때도</h3>
-      <p>써보고 마음에 든 제품을 한국에서 다시 살 때도 그대로 써요. 정식
-         수입되는지, 직구로만 구할 수 있는지, 어디서 얼마에 파는지
-         알려줘요.</p>
+      <h3>다녀온 뒤에도</h3>
+      <p>영수증을 찍으면 산 것이 쇼핑 기록으로 남아요. 써보고 마음에 든 제품을 한국에서
+         다시 살 때는 정식 수입되는지, 어디서 얼마에 파는지 알려줘요.</p>
     </div>
   </div>
 
   <div class="shelf">
     <figure>
-      <div class="phone sm"><div class="screen"><img src="shots/result.webp?v=79c3efb9" width="540" height="1103"
+      <div class="phone sm"><div class="screen"><img src="shots/result.webp?v=79c3efb9" width="540" height="1103" loading="lazy"
         alt="상품 화면 — 한국어 상품명과 일본 현지 최저가"></div></div>
       <figcaption>찍으면 나오는 화면</figcaption>
     </figure>
     <figure>
-      <div class="phone sm"><div class="screen"><img src="shots/korea.webp?v=cc58ded7" width="540" height="1103"
+      <div class="phone sm"><div class="screen"><img src="shots/korea.webp?v=cc58ded7" width="540" height="1103" loading="lazy"
         alt="같은 상품의 한국 가격과 일본 가격을 나란히 비교한 화면"></div></div>
       <figcaption>한국 가격까지</figcaption>
     </figure>
     <figure>
-      <div class="phone sm"><div class="screen"><img src="shots/category.webp?v=017864cb" width="540" height="1103"
+      <div class="phone sm"><div class="screen"><img src="shots/category.webp?v=017864cb" width="540" height="1103" loading="lazy"
         alt="카테고리 화면 — 대분류와 중분류"></div></div>
       <figcaption>찍지 않고 둘러볼 때</figcaption>
     </figure>
   </div>
 </div>
 
+<div class="sec" id="features" data-rise>
+  <h2 class="lead">쇼핑에 필요한 건 다 있어요</h2>
+  <p class="lead">매대 앞에서, 계산대에서, 집에 와서까지.</p>
+  <div class="grid6">
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 7v10"/><path d="M12 7v10"/><path d="M17 7v10"/></svg></div><h3>바코드 띡</h3>
+      <p>포장의 바코드만 찍으면 일본어를 몰라도 무슨 상품인지 한국어로 나와요.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg></div><h3>한국 가격과 비교</h3>
+      <p>일본 현지 최저가와 한국 판매가를 나란히. 정식 수입인지 직구로만 오는지도요.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></div><h3>함께 담는 장바구니</h3>
+      <p>일행과 하나의 장바구니를 같이 채우고, 누가 무엇을 담았는지 보여요.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div><h3>면세까지 남은 금액</h3>
+      <p>장바구니가 면세 기준까지 얼마 남았는지 알려줘요. 바뀌는 면세 제도도 안내해요.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 16H8"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"/></svg></div><h3>영수증 → 쇼핑 기록<span class="new">NEW</span></h3>
+      <p>영수증을 찍으면 산 것이 상품 사진과 함께 기록으로 남아요. 긴 영수증은 나눠 찍어도 돼요.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></div><h3>홈 화면 위젯</h3>
+      <p>앱을 열지 않고 홈 화면에서 바로 스캔·검색·영수증으로 들어가요.</p></div>
+  </div>
+</div>
+
 <div class="sec" id="where" data-rise>
-  <h2>가격은 어디서 오나</h2>
+  <h2 class="lead">가격은 어디서 오나</h2>
+  <p class="lead">비교 앱이라면 먼저 밝혀야 할 것.</p>
   <div class="srcs">
     <div class="src">
       <em>매대 가격</em>
@@ -283,26 +396,21 @@ th { color: var(--text); font-weight: 600; }
   </div>
 </div>
 
-<div class="sec" id="features" data-rise>
-  <h2>그 밖에</h2>
-  <div class="feats">
-    <div class="feat">
-      <h3>일행과 함께 담는 장바구니</h3>
-      <p>장바구니를 공유하면 누가 무엇을 담았는지 보이고, 면세 기준 금액까지
-         얼마나 남았는지도 함께 확인해요.</p>
+<div class="sec" data-rise>
+  <h2 class="lead">무엇이 들어 있나</h2>
+  <p class="lead">일본 드럭스토어·돈키호테에서 많이 사는 상품부터 채우고 있어요.</p>
+  <div class="cats"><div class="cat"><b>7,137</b><span>뷰티</span></div><div class="cat"><b>4,724</b><span>식품</span></div><div class="cat"><b>3,719</b><span>생활용품</span></div><div class="cat"><b>1,911</b><span>의약품</span></div><div class="cat"><b>691</b><span>건강식품</span></div></div>
+</div>
+
+<div class="band bleed cta" data-rise>
+  <div class="in">
+    <h2>일본 여행 전부터 여행 후까지,<br>띡과 함께</h2>
+    <p>무료로 받아 보세요. 제휴·문의는 <a href="mailto:ttikteam@gmail.com">ttikteam@gmail.com</a></p>
+    <div class="gets">
+      <a class="get live" href="https://apps.apple.com/kr/app/id6799801905"><svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.931.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> App Store에서 받기</a>
+      <span class="get"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M325.3 234.3 104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg> Google Play</span>
     </div>
   </div>
-</div>
-
-<div class="sec" data-rise>
-  <h2>무엇이 들어 있나</h2>
-  <div class="cats"><div class="cat"><b>7,137</b><span>뷰티</span></div><div class="cat"><b>4,724</b><span>식품</span></div><div class="cat"><b>3,548</b><span>생활용품</span></div><div class="cat"><b>1,911</b><span>의약품</span></div><div class="cat"><b>691</b><span>건강식품</span></div></div>
-</div>
-
-<div class="note" data-rise>
-  <h3>문의</h3>
-  <p>App Store에서 받을 수 있어요. 제휴 제안이나 문의는
-     <a href="mailto:ttikteam@gmail.com">ttikteam@gmail.com</a>로 보내주세요.</p>
 </div>
 <div class="foot">
   <a href="./">ttik</a><a href="./privacy.html">개인정보 처리방침</a><a href="./terms.html">이용약관</a><a href="./delete-account.html">계정 삭제</a>
@@ -325,6 +433,13 @@ document.querySelectorAll('.rise').forEach(function (el) { io.observe(el); });
 setTimeout(function () {
   document.querySelectorAll('.rise').forEach(function (el) { el.classList.add('in'); });
 }, 2500);
+// 「띡, 이렇게 써요」 줄의 ‹ › 단추. 손가락·트랙패드로 넘기는 것이 먼저고, 이것은 마우스용.
+var reel = document.getElementById('reel');
+document.querySelectorAll('.reel-nav button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    if (reel) reel.scrollBy({ left: Number(b.dataset.dir) * 252 * 2, behavior: 'smooth' });
+  });
+});
 </script>
 </body>
 </html>
