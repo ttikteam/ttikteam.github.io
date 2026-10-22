@@ -233,6 +233,76 @@ html, body { overflow-x: clip; }
   .nav .small { display: none; }
 }
 
+/* ── 첫 화면 2차 개편(2026-10-23): 검은 첫 화면 + 스캔 화면 녹화, 숫자 카드, 순간 카드, 상품 띠 ── */
+.herob { background: #0B0B0D; color: #F4F4F6; overflow: hidden; }
+.herob .in { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; }
+.herob .in::before { content: ''; position: absolute; right: -120px; top: 80px; width: 560px; height: 560px; z-index: 0;
+  background: radial-gradient(closest-side, rgba(0,71,255,.35), transparent 70%); pointer-events: none; }
+.herob .nav, .herob .hero { position: relative; z-index: 1; }
+.herob .mark { color: #FFFFFF; }
+.herob .nav a.small { color: #9A9BA3; }
+.herob .nav .getbtn { background: #FFFFFF; color: #0B0B0D; }
+.herob .hero { padding: 48px 0 96px; }
+.herob h1 em { color: #7D9BFF; }
+.herob .hero p { color: #B4B5BC; }
+.herob .pill { background: #17181C; color: #B4B5BC; }
+.herob .pill .dot { box-shadow: 0 0 0 4px rgba(0,71,255,.25); }
+.herob .get { background: #17181C; border-color: #2B2C33; color: #7E7F88; }
+.herob .get.live { background: #FFFFFF; color: #0B0B0D; border-color: #FFFFFF; }
+.herob .soon, .herob .trust { color: #7E7F88; }
+.herob .trust b { color: #F4F4F6; }
+.herob .phone { background: #17181C; border-color: #2B2C33; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+.herob .screen { background: #FFFFFF; }
+
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 72px; }
+.kpi { border: 1px solid var(--border); border-radius: 20px; padding: 28px 24px; text-align: center; }
+.kpi span { font-size: 13px; color: var(--muted); }
+.kpi b { display: block; font-size: 38px; font-weight: 800; letter-spacing: -1.4px; color: var(--accent); margin-top: 4px; }
+.kpis + .asof { text-align: right; font-size: 12px; color: var(--muted); margin: 10px 2px 0; }
+
+.moments { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.moment { margin: 0; }
+.moment .shot { border-radius: 20px; overflow: hidden; background: #0B0B0D; aspect-ratio: 640 / 525; }
+.moment .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.moment h3 { font-size: 18px; letter-spacing: -.5px; margin: 18px 0 6px; }
+.moment p { font-size: 14px; color: var(--subtle); margin: 0; }
+
+.shelfband { margin-top: 96px; background: var(--canvas); padding: 64px 0 70px; }
+.shelfband .in { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.marquee { overflow: hidden; margin-top: 30px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.mtrack { display: flex; gap: 14px; width: max-content; animation: slide 40s linear infinite; }
+.marquee:hover .mtrack { animation-play-state: paused; }
+@keyframes slide { to { transform: translateX(-50%); } }
+.pcard { width: 172px; flex: 0 0 auto; background: var(--bg); border-radius: 18px; padding: 16px 16px 14px;
+  border: 1px solid var(--border); }
+.pcard img { width: 100%; height: auto; display: block; border-radius: 10px; background: #FFFFFF; }
+.pcard .b { display: block; font-size: 12px; color: var(--muted); margin-top: 12px; }
+.pcard .n { display: block; font-size: 14px; font-weight: 700; letter-spacing: -.3px; line-height: 1.4; }
+@media (prefers-reduced-motion: reduce) { .mtrack { animation: none; } .marquee { overflow-x: auto; } }
+
+.rows { display: grid; gap: 72px; }
+.row { display: grid; grid-template-columns: 1fr 260px; gap: 56px; align-items: center; }
+.row.flip { grid-template-columns: 260px 1fr; }
+.row.flip .txt { order: 2; }
+.row .tag { font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: .3px; }
+.row h3 { font-size: 28px; letter-spacing: -1px; line-height: 1.3; margin: 10px 0 12px; }
+.row p { font-size: 15px; color: var(--subtle); margin: 0; max-width: 28em; }
+.row .phone { width: 260px; }
+
+@media (max-width: 760px) {
+  .herob .hero { padding: 24px 0 64px; }
+  .herob .in::before { right: -200px; top: 360px; }
+  .kpis, .moments { grid-template-columns: 1fr; }
+  .kpi b { font-size: 32px; }
+  .row, .row.flip { grid-template-columns: 1fr; gap: 28px; }
+  .row.flip .txt { order: 0; }
+  .row .phone { margin: 0 auto; width: 240px; }
+  .row h3 { font-size: 23px; }
+  .pcard { width: 148px; }
+}
+
 @media (max-width: 760px) {
   .hero { grid-template-columns: 1fr; gap: 44px; padding: 40px 0 64px; }
   .phone { margin: 0 auto; }

@@ -233,6 +233,76 @@ html, body { overflow-x: clip; }
   .nav .small { display: none; }
 }
 
+/* ── 첫 화면 2차 개편(2026-10-23): 검은 첫 화면 + 스캔 화면 녹화, 숫자 카드, 순간 카드, 상품 띠 ── */
+.herob { background: #0B0B0D; color: #F4F4F6; overflow: hidden; }
+.herob .in { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; }
+.herob .in::before { content: ''; position: absolute; right: -120px; top: 80px; width: 560px; height: 560px; z-index: 0;
+  background: radial-gradient(closest-side, rgba(0,71,255,.35), transparent 70%); pointer-events: none; }
+.herob .nav, .herob .hero { position: relative; z-index: 1; }
+.herob .mark { color: #FFFFFF; }
+.herob .nav a.small { color: #9A9BA3; }
+.herob .nav .getbtn { background: #FFFFFF; color: #0B0B0D; }
+.herob .hero { padding: 48px 0 96px; }
+.herob h1 em { color: #7D9BFF; }
+.herob .hero p { color: #B4B5BC; }
+.herob .pill { background: #17181C; color: #B4B5BC; }
+.herob .pill .dot { box-shadow: 0 0 0 4px rgba(0,71,255,.25); }
+.herob .get { background: #17181C; border-color: #2B2C33; color: #7E7F88; }
+.herob .get.live { background: #FFFFFF; color: #0B0B0D; border-color: #FFFFFF; }
+.herob .soon, .herob .trust { color: #7E7F88; }
+.herob .trust b { color: #F4F4F6; }
+.herob .phone { background: #17181C; border-color: #2B2C33; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+.herob .screen { background: #FFFFFF; }
+
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 72px; }
+.kpi { border: 1px solid var(--border); border-radius: 20px; padding: 28px 24px; text-align: center; }
+.kpi span { font-size: 13px; color: var(--muted); }
+.kpi b { display: block; font-size: 38px; font-weight: 800; letter-spacing: -1.4px; color: var(--accent); margin-top: 4px; }
+.kpis + .asof { text-align: right; font-size: 12px; color: var(--muted); margin: 10px 2px 0; }
+
+.moments { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.moment { margin: 0; }
+.moment .shot { border-radius: 20px; overflow: hidden; background: #0B0B0D; aspect-ratio: 640 / 525; }
+.moment .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.moment h3 { font-size: 18px; letter-spacing: -.5px; margin: 18px 0 6px; }
+.moment p { font-size: 14px; color: var(--subtle); margin: 0; }
+
+.shelfband { margin-top: 96px; background: var(--canvas); padding: 64px 0 70px; }
+.shelfband .in { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.marquee { overflow: hidden; margin-top: 30px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.mtrack { display: flex; gap: 14px; width: max-content; animation: slide 40s linear infinite; }
+.marquee:hover .mtrack { animation-play-state: paused; }
+@keyframes slide { to { transform: translateX(-50%); } }
+.pcard { width: 172px; flex: 0 0 auto; background: var(--bg); border-radius: 18px; padding: 16px 16px 14px;
+  border: 1px solid var(--border); }
+.pcard img { width: 100%; height: auto; display: block; border-radius: 10px; background: #FFFFFF; }
+.pcard .b { display: block; font-size: 12px; color: var(--muted); margin-top: 12px; }
+.pcard .n { display: block; font-size: 14px; font-weight: 700; letter-spacing: -.3px; line-height: 1.4; }
+@media (prefers-reduced-motion: reduce) { .mtrack { animation: none; } .marquee { overflow-x: auto; } }
+
+.rows { display: grid; gap: 72px; }
+.row { display: grid; grid-template-columns: 1fr 260px; gap: 56px; align-items: center; }
+.row.flip { grid-template-columns: 260px 1fr; }
+.row.flip .txt { order: 2; }
+.row .tag { font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: .3px; }
+.row h3 { font-size: 28px; letter-spacing: -1px; line-height: 1.3; margin: 10px 0 12px; }
+.row p { font-size: 15px; color: var(--subtle); margin: 0; max-width: 28em; }
+.row .phone { width: 260px; }
+
+@media (max-width: 760px) {
+  .herob .hero { padding: 24px 0 64px; }
+  .herob .in::before { right: -200px; top: 360px; }
+  .kpis, .moments { grid-template-columns: 1fr; }
+  .kpi b { font-size: 32px; }
+  .row, .row.flip { grid-template-columns: 1fr; gap: 28px; }
+  .row.flip .txt { order: 0; }
+  .row .phone { margin: 0 auto; width: 240px; }
+  .row h3 { font-size: 23px; }
+  .pcard { width: 148px; }
+}
+
 @media (max-width: 760px) {
   .hero { grid-template-columns: 1fr; gap: 44px; padding: 40px 0 64px; }
   .phone { margin: 0 auto; }
@@ -246,12 +316,14 @@ html, body { overflow-x: clip; }
 }
 </style>
 </head>
-<body><div class="wrap"><div class="nav">
+<body><div class="wrap"><div class="herob bleed">
+<div class="in">
+<div class="nav">
   <a class="mark" href="./">ttik</a>
   <div>
+    <a class="small" href="#moments">이럴 때</a>
     <a class="small" href="#tour">둘러보기</a>
     <a class="small" href="#features">기능</a>
-    <a class="small" href="#where">가격 출처</a>
     <a class="small" href="mailto:ttikteam@gmail.com">문의</a>
     <a class="getbtn" href="https://apps.apple.com/kr/app/id6799801905">앱 받기</a>
   </div>
@@ -263,31 +335,28 @@ html, body { overflow-x: clip; }
     <h1>일본 여행 중 살까 말까,<br><em>띡</em> 한번이면 끝</h1>
     <p>매장에서 바코드를 찍으면 그 상품이 무엇인지, 일본 현지 시세가 얼마인지,
        한국에서는 어떤지 한 화면에서 확인해요. 일본어를 몰라도 돼요.</p>
-
     <div class="gets">
       <a class="get live" href="https://apps.apple.com/kr/app/id6799801905"><svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.931.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> App Store에서 받기</a>
       <span class="get"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M325.3 234.3 104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg> Google Play</span>
     </div>
     <p class="soon">Google Play는 준비하고 있어요.</p>
-    <div class="trust"><span><b>18,182</b>개 상품</span><span><b>289</b>개 브랜드</span><span>무료</span><span>일본어 몰라도 OK</span></div>
   </div>
 
-  <div class="stage">
-    <div class="phone">
-      <div class="screen"><img src="shots/home.webp?v=c79a652a" width="540" height="1103"
-        alt="ttik 홈 화면 — 바코드 스캔 배너, 카테고리, 인기 브랜드"></div>
-    </div>
-    <div class="chip a">바코드를 찍으면<b>한국어 상품명</b></div>
-    <div class="chip b">란도린 섬유탈취제<b>일본이 ₩5,408 싸요</b></div>
+  <div class="phone">
+    <div class="screen"><img src="shots/scan.webp?v=9b4ff0ee" width="540" height="1106"
+      alt="ttik으로 CHOI 마스크 바코드를 찍자 한국어 상품 화면이 뜨는 모습"></div>
   </div>
 </div>
+</div>
+</div>
 
-<div class="band bleed" data-rise>
-  <div class="in nums">
-    <div><b>18,182</b><span>등록된 일본 상품</span></div>
-    <div><b>289</b><span>브랜드</span></div>
-    <div><b>5</b><span>카테고리 · 뷰티부터 의약품까지</span></div>
+<div data-rise>
+  <div class="kpis">
+    <div class="kpi"><span>등록된 일본 상품</span><b>18,182개</b></div>
+    <div class="kpi"><span>브랜드</span><b>289개</b></div>
+    <div class="kpi"><span>뷰티부터 의약품까지</span><b>5개 분야</b></div>
   </div>
+  <p class="asof">숫자는 이 페이지를 만든 날 기준이에요.</p>
 </div>
 
 <div class="ache" data-rise>
@@ -296,6 +365,62 @@ html, body { overflow-x: clip; }
   <p class="small">캐리어 무게를 재가며 담아 온 것이 집 앞 올리브영에 있을 때가 있어요.
      반대로, 한국에서는 못 구하는 것을 그냥 두고 온 적도 있고요. ttik이 매대
      앞에서 간편하게 띡 알려줘요.</p>
+</div>
+
+<div class="sec" id="moments" data-rise>
+  <h2 class="lead">이럴 때 띡</h2>
+  <p class="lead">쇼핑하는 동안 고민이 생기는 세 순간에 맞춰 만들었어요.</p>
+  <div class="moments">
+    <figure class="moment">
+      <div class="shot"><img src="shots/moment-shelf.webp?v=d96cf03c" width="640" height="525" loading="lazy" alt="바코드를 찍는 카메라 화면"></div>
+      <h3>매대 앞에서</h3>
+      <p>처음 보는 일본어 포장이어도 바코드를 찍으면 무슨 상품인지 한국어로 나와요.</p>
+    </figure>
+    <figure class="moment">
+      <div class="shot"><img src="shots/moment-cart.webp?v=33656104" width="640" height="525" loading="lazy" alt="면세까지 남은 금액을 보여 주는 장바구니"></div>
+      <h3>계산대 가기 전에</h3>
+      <p>담은 것을 한 번 더 보고, 면세 기준까지 얼마 남았는지 확인해요.</p>
+    </figure>
+    <figure class="moment">
+      <div class="shot"><img src="shots/moment-home.webp?v=73c6f781" width="640" height="525" loading="lazy" alt="영수증을 찍어 확인하는 화면"></div>
+      <h3>다녀온 뒤에</h3>
+      <p>영수증을 찍으면 산 것이 상품 사진과 함께 쇼핑 기록으로 남아요.</p>
+    </figure>
+  </div>
+</div>
+
+<div class="shelfband bleed" data-rise>
+  <div class="in">
+    <h2 class="lead" style="font-size:30px;letter-spacing:-1px;margin:0 0 8px">일본에서 사 오는 그 상품들</h2>
+    <p class="lead" style="margin:0;color:var(--subtle)">드럭스토어와 돈키호테에서 많이 사는 상품부터 한국어로 정리해 두었어요.</p>
+  </div>
+  <div class="marquee"><div class="mtrack"><div class="pcard"><img src="img/4582469501411.jpg" width="200" height="200" loading="lazy" alt="란도린 섬유탈취제 클래식 플로랄"><span class="b">란도린</span><span class="n">섬유탈취제 클래식 플로랄</span></div><div class="pcard"><img src="img/4901330651596.jpg" width="200" height="200" loading="lazy" alt="칼비 사츠마리코"><span class="b">칼비</span><span class="n">사츠마리코</span></div><div class="pcard"><img src="img/4901417629517.jpg" width="200" height="200" loading="lazy" alt="하다비세이 CHOI 약용 마스크"><span class="b">하다비세이</span><span class="n">CHOI 약용 마스크</span></div><div class="pcard"><img src="img/4946842526512.jpg" width="200" height="200" loading="lazy" alt="민티아 포도"><span class="b">민티아</span><span class="n">포도</span></div><div class="pcard"><img src="img/49795462.jpg" width="200" height="200" loading="lazy" alt="라이온 노니오 혀 클리닝 젤"><span class="b">라이온</span><span class="n">노니오 혀 클리닝 젤</span></div><div class="pcard"><img src="img/4987033000244.jpg" width="200" height="200" loading="lazy" alt="오타이산 오타이산 S 18포"><span class="b">오타이산</span><span class="n">오타이산 S 18포</span></div><div class="pcard"><img src="img/4946842521814.jpg" width="200" height="200" loading="lazy" alt="민티아 브리즈 리프레시 블루"><span class="b">민티아</span><span class="n">브리즈 리프레시 블루</span></div><div class="pcard"><img src="img/4560401461771.jpg" width="200" height="200" loading="lazy" alt="퀄리티 퍼스트 더마 레이저 AZ 마스크"><span class="b">퀄리티 퍼스트</span><span class="n">더마 레이저 AZ 마스크</span></div><div class="pcard"><img src="img/4582469501411.jpg" width="200" height="200" loading="lazy" alt="란도린 섬유탈취제 클래식 플로랄"><span class="b">란도린</span><span class="n">섬유탈취제 클래식 플로랄</span></div><div class="pcard"><img src="img/4901330651596.jpg" width="200" height="200" loading="lazy" alt="칼비 사츠마리코"><span class="b">칼비</span><span class="n">사츠마리코</span></div><div class="pcard"><img src="img/4901417629517.jpg" width="200" height="200" loading="lazy" alt="하다비세이 CHOI 약용 마스크"><span class="b">하다비세이</span><span class="n">CHOI 약용 마스크</span></div><div class="pcard"><img src="img/4946842526512.jpg" width="200" height="200" loading="lazy" alt="민티아 포도"><span class="b">민티아</span><span class="n">포도</span></div><div class="pcard"><img src="img/49795462.jpg" width="200" height="200" loading="lazy" alt="라이온 노니오 혀 클리닝 젤"><span class="b">라이온</span><span class="n">노니오 혀 클리닝 젤</span></div><div class="pcard"><img src="img/4987033000244.jpg" width="200" height="200" loading="lazy" alt="오타이산 오타이산 S 18포"><span class="b">오타이산</span><span class="n">오타이산 S 18포</span></div><div class="pcard"><img src="img/4946842521814.jpg" width="200" height="200" loading="lazy" alt="민티아 브리즈 리프레시 블루"><span class="b">민티아</span><span class="n">브리즈 리프레시 블루</span></div><div class="pcard"><img src="img/4560401461771.jpg" width="200" height="200" loading="lazy" alt="퀄리티 퍼스트 더마 레이저 AZ 마스크"><span class="b">퀄리티 퍼스트</span><span class="n">더마 레이저 AZ 마스크</span></div></div></div>
+</div>
+
+<div class="sec" data-rise>
+  <div class="rows">
+    <div class="row">
+      <div class="txt"><span class="tag">바코드 띡</span>
+        <h3>찍으면 바로,<br>한국어로 알려줘요</h3>
+        <p>포장 뒷면의 바코드만 찍으면 돼요. 한국어 상품명과 설명, 일본 현지 가격이 한 화면에 나와요.</p></div>
+      <div class="phone"><div class="screen"><img src="shots/result.webp?v=79c3efb9" width="540" height="1103" loading="lazy"
+        alt="상품 화면 — 한국어 상품명과 일본 현지 최저가"></div></div>
+    </div>
+    <div class="row flip">
+      <div class="txt"><span class="tag">한국 가격까지</span>
+        <h3>일본에서 살까,<br>한국에서 살까</h3>
+        <p>같은 상품을 한국에서는 얼마에 파는지, 정식 수입품인지 직구로만 오는 것인지 나란히 보여 줘요.</p></div>
+      <div class="phone"><div class="screen"><img src="shots/korea.webp?v=cc58ded7" width="540" height="1103" loading="lazy"
+        alt="같은 상품의 한국 가격과 일본 가격을 나란히 비교한 화면"></div></div>
+    </div>
+    <div class="row">
+      <div class="txt"><span class="tag">미리 둘러보기</span>
+        <h3>떠나기 전에<br>살 것을 정해 두세요</h3>
+        <p>카테고리와 인기 브랜드로 정리해 두었어요. 찜하고 장바구니에 담아 두면 매장에서 헤매지 않아요.</p></div>
+      <div class="phone"><div class="screen"><img src="shots/home.webp?v=c79a652a" width="540" height="1103" loading="lazy"
+        alt="ttik 홈 화면 — 카테고리와 인기 브랜드"></div></div>
+    </div>
+  </div>
 </div>
 
 <div class="band bleed tour" id="tour">
@@ -333,24 +458,6 @@ html, body { overflow-x: clip; }
          다시 살 때는 정식 수입되는지, 어디서 얼마에 파는지 알려줘요.</p>
     </div>
   </div>
-
-  <div class="shelf">
-    <figure>
-      <div class="phone sm"><div class="screen"><img src="shots/result.webp?v=79c3efb9" width="540" height="1103" loading="lazy"
-        alt="상품 화면 — 한국어 상품명과 일본 현지 최저가"></div></div>
-      <figcaption>찍으면 나오는 화면</figcaption>
-    </figure>
-    <figure>
-      <div class="phone sm"><div class="screen"><img src="shots/korea.webp?v=cc58ded7" width="540" height="1103" loading="lazy"
-        alt="같은 상품의 한국 가격과 일본 가격을 나란히 비교한 화면"></div></div>
-      <figcaption>한국 가격까지</figcaption>
-    </figure>
-    <figure>
-      <div class="phone sm"><div class="screen"><img src="shots/category.webp?v=017864cb" width="540" height="1103" loading="lazy"
-        alt="카테고리 화면 — 대분류와 중분류"></div></div>
-      <figcaption>찍지 않고 둘러볼 때</figcaption>
-    </figure>
-  </div>
 </div>
 
 <div class="sec" id="features" data-rise>
@@ -366,7 +473,7 @@ html, body { overflow-x: clip; }
     <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div><h3>면세까지 남은 금액</h3>
       <p>장바구니가 면세 기준까지 얼마 남았는지 알려줘요. 바뀌는 면세 제도도 안내해요.</p></div>
     <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 16H8"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"/></svg></div><h3>영수증 → 쇼핑 기록<span class="new">NEW</span></h3>
-      <p>영수증을 찍으면 산 것이 상품 사진과 함께 기록으로 남아요. 긴 영수증은 나눠 찍어도 돼요.</p></div>
+      <p>영수증을 찍으면 산 것이 상품 사진과 함께 기록으로 남아요.</p></div>
     <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></div><h3>홈 화면 위젯</h3>
       <p>앱을 열지 않고 홈 화면에서 바로 스캔·검색·영수증으로 들어가요.</p></div>
   </div>
