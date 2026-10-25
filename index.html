@@ -62,7 +62,7 @@ h1 { font-size: 46px; line-height: 1.22; letter-spacing: -1.8px; font-weight: 80
 .phone.sm { width: 214px; padding: 8px; border-radius: 30px; }
 .screen { background: var(--bg); border-radius: 30px; overflow: hidden; display: block; }
 .phone.sm .screen { border-radius: 23px; }
-.screen img { display: block; width: 100%; height: auto; }
+.screen img, .screen video { display: block; width: 100%; height: auto; }
 
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
 .step .n { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px;
@@ -344,8 +344,12 @@ html, body { overflow-x: clip; }
   </div>
 
   <div class="phone">
-    <div class="screen"><img src="shots/scan.webp?v=9b4ff0ee" width="540" height="1106"
-      alt="ttik으로 CHOI 마스크 바코드를 찍자 한국어 상품 화면이 뜨는 모습"></div>
+    <!-- 영상, 움직이는 WebP 가 아니라: WebP 는 29장을 골라 초당 15장으로 돌려서 화면이 넘어가는 구간이
+         뚝뚝 끊겼다(운영자 2026-10-25). MP4 는 원본 60장/초를 다 담고도 더 작다. 결과 화면의 상품 사진은
+         라쿠텐 것이 찍혀 있어 프레임마다 운영자가 찍은 사진(img/4901417629517.jpg)으로 덮었다. -->
+    <div class="screen"><video src="shots/scan.mp4?v=07c67271" poster="shots/scan-poster.jpg?v=5f8afb71"
+      width="540" height="1106" autoplay muted loop playsinline preload="auto"
+      aria-label="ttik으로 CHOI 마스크 바코드를 찍자 한국어 상품 화면이 뜨는 모습"></video></div>
   </div>
 </div>
 </div>
